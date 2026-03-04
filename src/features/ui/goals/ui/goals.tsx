@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { PolymorphButton } from "@/shared";
+import { PolymorphButton } from "@/shared/ui";
 import clsx from "clsx";
 import Plus from "@/assets/icons/svg/Plus.svg?react";
 import s from "./goals.module.scss";
+import { Link } from "react-router-dom";
+import { MAX_GOALS } from "@/shared/constants/constants";
 
-export const Goals = ({ title }: { title: string }) => {
+type Properties = { goals: number; title: string };
+
+export const Goals = ({ goals, title }: Properties) => {
   const [applications, _setApplications] = useState([
     { id: 1, label: "round", isCreated: false },
     { id: 2, label: "round", isCreated: false },
@@ -19,6 +23,8 @@ export const Goals = ({ title }: { title: string }) => {
         <span className={s.description}>{title}</span>
       </div>
       <PolymorphButton
+        as={Link}
+        to={"/generation"}
         className={clsx(s.goalsButton)}
         variant='primary'
       >
@@ -33,7 +39,9 @@ export const Goals = ({ title }: { title: string }) => {
             ></li>
           ))}
         </ul>
-        <span className={s.counterDescription}>0 out of 5</span>
+        <span className={s.counterDescription}>
+          {goals} out of {MAX_GOALS}
+        </span>
       </div>
     </div>
   );

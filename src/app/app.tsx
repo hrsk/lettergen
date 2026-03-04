@@ -1,5 +1,5 @@
 import { Main } from "@/app";
-import { Dashboard } from "@/widgets";
+import { Dashboard, LettersGenerator } from "@/widgets";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export const App = () => {
@@ -13,6 +13,10 @@ export const App = () => {
           <Route
             index
             element={<Dashboard />}
+          />
+          <Route
+            path='/generation'
+            element={<LettersGenerator />}
           />
         </Route>
       </Routes>

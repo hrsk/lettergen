@@ -51,6 +51,7 @@ export default defineConfig([
           },
         },
       ],
+      "unicorn/consistent-function-scoping": ["error", { checkArrowFunctions: false }],
       "unicorn/switch-case-braces": ["error", "always"],
       "unicorn/relative-url-style": ["error", "always"],
       "react/react-in-jsx-scope": "off",

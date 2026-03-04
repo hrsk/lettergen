@@ -1,0 +1,1 @@
+export { LettersGenerator } from "./letterGenerator";

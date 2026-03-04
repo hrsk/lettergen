@@ -1,5 +1,5 @@
 import Plus from "@/assets/icons/svg/Plus.svg?react";
-import { Header, PolymorphButton } from "@/shared";
+import { Header, PolymorphButton } from "@/shared/ui";
 import { Link } from "react-router-dom";
 import s from "./dashboard.module.scss";
 
@@ -10,7 +10,7 @@ export const Dashboard = () => {
         <h1>Applications</h1>
         <PolymorphButton
           as={Link}
-          to={"/letters"}
+          to={"/generation"}
           variant={"primary"}
           className={s.appHeaderButton}
         >
