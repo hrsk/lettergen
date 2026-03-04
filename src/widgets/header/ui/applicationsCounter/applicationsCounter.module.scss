@@ -1,0 +1,36 @@
+.text {
+  font-size: var(--font-size-l);
+  color: var(--gray-500);
+  line-height: 156%;
+}
+
+.container {
+  padding-right: 24px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.round {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--dark-700);
+  opacity: 0.24;
+}
+
+.activeRound {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--dark-700);
+  opacity: 1;
+}

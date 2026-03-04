@@ -1,0 +1,1 @@
+export { RightSide } from "./rightSide";
