@@ -6,7 +6,7 @@ import clsx from "clsx";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
-  const repeat = false;
+  const repeat = true;
   const isLoading = false;
   // const value = "Product manager, Apple";
   const value = "";

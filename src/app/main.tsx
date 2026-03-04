@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import s from "./main.module.scss";
 
 export const Main = () => {
-  const goals = 0;
+  const goals = 3;
 
   return (
     <main className={s.main}>
