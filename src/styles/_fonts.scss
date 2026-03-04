@@ -1,0 +1,36 @@
+:root {
+  --font-family: "Fixel Text", sans-serif;
+  --second-family: "Fixel Display", sans-serif;
+}
+
+@font-face {
+  font-family: 'Fixel Text';
+  src: url('./../assets/fonts/FixelText-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel Text';
+  src: url('./../assets/fonts/FixelText-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel Text';
+  src: url('./../assets/fonts/FixelText-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel Display';
+  src: url('./../assets/fonts/FixelDisplay-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
