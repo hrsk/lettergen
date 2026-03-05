@@ -1,10 +1,23 @@
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 import Delete from "@/assets/icons/svg/Trash.svg?react";
 import s from "./card.module.scss";
-import { useForm, type Letter } from "@/features/ui/generate-form/model/formStore";
+import { useForm, type Letter, type LetterText } from "@/features/ui/generate-form/model/formStore";
+import { useEffect, useState } from "react";
 
 export const Card = ({ letter }: { letter: Letter }) => {
   const { deleteLetter } = useForm();
+
+  const [copy, setCopy] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timerID = setTimeout(() => setCopy(false), 1500);
+    return () => clearTimeout(timerID);
+  }, [copy]);
+
+  const copyToClipboard = async (copyText: LetterText) => {
+    await navigator.clipboard.writeText(Object.values(copyText).join(" "));
+    setCopy(true);
+  };
 
   return (
     <div className={s.letterCard}>
@@ -27,8 +40,11 @@ export const Card = ({ letter }: { letter: Letter }) => {
           <Delete />
           Delete
         </button>
-        <button className={s.button}>
-          Copy to clipboard
+        <button
+          className={s.button}
+          onClick={() => copyToClipboard(letter.text)}
+        >
+          {copy ? "Copied" : "Copy to clipboard"}
           <Copy />
         </button>
       </div>

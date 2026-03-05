@@ -1,17 +1,30 @@
 import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 
-import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { useForm, type LetterText } from "@/features/ui/generate-form/model/formStore";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import s from "./letterOutput.module.scss";
 
 export const LetterOutput = () => {
   const { letters, isLoading } = useForm();
+  const [copy, setCopy] = useState<boolean>(false);
+
   useEffect(() => {
     localStorage.setItem("letters", JSON.stringify(letters));
   }, [letters]);
+
+  useEffect(() => {
+    const timerID = setTimeout(() => setCopy(false), 1500);
+    return () => clearTimeout(timerID);
+  }, [copy]);
+
+  const copyToClipboard = async (copyText: LetterText | undefined) => {
+    if (!copyText) return;
+    await navigator.clipboard.writeText(Object.values(copyText).join(" "));
+    setCopy(true);
+  };
 
   if (isLoading) {
     return (
@@ -50,8 +63,11 @@ export const LetterOutput = () => {
         <span></span>
       </div> */}
       <div style={{ maxWidth: "40px" }}>
-        <button className={s.button}>
-          Copy to clipboard
+        <button
+          className={s.button}
+          onClick={() => copyToClipboard(letters.at(-1)?.text)}
+        >
+          {copy ? "Copied" : "Copy to clipboard"}
           <Copy />
         </button>
       </div>
