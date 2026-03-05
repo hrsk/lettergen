@@ -1,34 +1,25 @@
 import Completed from "@/assets/icons/svg/Check.svg?react";
+import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
 import s from "./ApplicationsCounter.module.scss";
-import { useState } from "react";
-import { MAX_GOALS } from "@/shared/constants/constants";
 
-type Properties = {
-  goals: number;
-};
-export const ApplicationsCounters = ({ goals }: Properties) => {
-  const [applications, _setApplications] = useState([
-    { id: 1, label: "round", isCreated: false },
-    { id: 2, label: "round", isCreated: false },
-    { id: 3, label: "round", isCreated: false },
-    { id: 4, label: "round", isCreated: false },
-    { id: 5, label: "round", isCreated: false },
-  ]);
+export const ApplicationsCounters = () => {
+  const { letters } = useForm();
 
   return (
     <div className={s.container}>
       <span className={s.text}>
-        {goals}/{MAX_GOALS} applications generated
+        {letters.length}/{MAX_GOALS} applications generated
       </span>
-      {goals === MAX_GOALS ? (
+      {letters.length === MAX_GOALS ? (
         <Completed />
       ) : (
         <ul className={s.rounds}>
-          {applications?.map((application) => (
+          {Array.from({ length: MAX_GOALS }).map((_, index) => (
             <li
-              className={clsx([application.isCreated ? s.activeRound : s.round])}
-              key={application.id}
+              className={clsx([index < letters.length ? s.activeRound : s.round])}
+              key={index}
             ></li>
           ))}
         </ul>

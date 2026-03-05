@@ -3,15 +3,11 @@ import { Logo } from "@/widgets/header/ui/logo";
 
 import s from "./header.module.scss";
 
-type Properties = {
-  goals: number;
-};
-
-export const Header = ({ goals }: Properties) => {
+export const Header = () => {
   return (
     <header className={s.header}>
       <Logo />
-      <RightSide goals={goals} />
+      <RightSide />
     </header>
   );
 };

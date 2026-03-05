@@ -1,19 +1,20 @@
+import { useForm } from "@/features/ui/generate-form/model/formStore";
 import { Goals } from "@/features/ui/goals";
 import { Header } from "@/widgets/header/ui/header";
 import { Outlet } from "react-router-dom";
 import s from "./main.module.scss";
 
 export const Main = () => {
-  const goals = 3;
+  const { letters } = useForm();
 
   return (
     <main className={s.main}>
-      <Header goals={goals} />
+      <Header />
       <Outlet />
-      {goals < 5 && (
+      {letters.length < 5 && (
         <Goals
-          goals={goals}
-          title={"Generate and send out couple more job applications today to get hired faster "}
+          title={"Hit your goal"}
+          description={"Generate and send out couple more job applications today to get hired faster"}
         />
       )}
     </main>

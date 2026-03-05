@@ -1,26 +1,21 @@
-import { useState } from "react";
+import Plus from "@/assets/icons/svg/Plus.svg?react";
+import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { MAX_GOALS } from "@/shared/constants/constants";
 import { PolymorphButton } from "@/shared/ui";
 import clsx from "clsx";
-import Plus from "@/assets/icons/svg/Plus.svg?react";
-import s from "./goals.module.scss";
 import { Link } from "react-router-dom";
-import { MAX_GOALS } from "@/shared/constants/constants";
+import s from "./goals.module.scss";
 
-type Properties = { goals: number; title: string };
+type Properties = { title: string; description: string };
 
-export const Goals = ({ goals, title }: Properties) => {
-  const [applications, _setApplications] = useState([
-    { id: 1, label: "round", isCreated: false },
-    { id: 2, label: "round", isCreated: false },
-    { id: 3, label: "round", isCreated: false },
-    { id: 4, label: "round", isCreated: false },
-    { id: 5, label: "round", isCreated: false },
-  ]);
+export const Goals = ({ title, description }: Properties) => {
+  const { letters } = useForm();
+
   return (
     <div className={s.goalsWrapper}>
       <div className={s.goalsContainer}>
-        <h3 className={s.goalsTitle}>Hit your goal</h3>
-        <span className={s.description}>{title}</span>
+        <h3 className={s.goalsTitle}>{title}</h3>
+        <span className={s.description}>{description}</span>
       </div>
       <PolymorphButton
         as={Link}
@@ -32,15 +27,15 @@ export const Goals = ({ goals, title }: Properties) => {
       </PolymorphButton>
       <div className={s.goalsCounter}>
         <ul className={s.items}>
-          {applications.map((application) => (
+          {Array.from({ length: MAX_GOALS }).map((_, index) => (
             <li
-              className={clsx([application.isCreated ? s.activeItem : s.item])}
-              key={application.id}
+              className={clsx([index < letters.length ? s.activeItem : s.item])}
+              key={index}
             ></li>
           ))}
         </ul>
         <span className={s.counterDescription}>
-          {goals} out of {MAX_GOALS}
+          {letters.length} out of {MAX_GOALS}
         </span>
       </div>
     </div>
