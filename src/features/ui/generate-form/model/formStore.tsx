@@ -3,7 +3,7 @@ import { v1 } from "uuid";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-type LetterText = {
+export type LetterText = {
   title: string;
   company: string;
   skills: string;
@@ -56,7 +56,7 @@ export const useForm = create<FormState>()(
         const generatedLetter: LetterText = {
           title: `Dear ${company} Team,`,
           company: `I am writing to express my interest in the ${job} position.`,
-          skills: `My experience in the realm combined with my skills in ${skills}
+          skills: String.raw`My experience in the realm combined with my skills in ${skills}
           make me a strong candidate for this role.`,
           additional: `${additional.charAt(0).toUpperCase()}${additional.slice(1)}`,
           other:

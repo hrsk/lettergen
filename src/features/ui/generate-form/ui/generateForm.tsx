@@ -10,6 +10,7 @@ import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
   const { letters, isLoading, generate } = useForm();
+  const [gen, setGen] = useState<number>(0);
 
   const [formData, setFormLocalData] = useState({
     job: "",
@@ -17,7 +18,8 @@ export const GenerateForm = () => {
     skills: "",
     additional: "",
   });
-  const disabled = !formData.job || !formData.company || !formData.skills || !formData.additional;
+  const disabled =
+    !formData.job || !formData.company || !formData.skills || !formData.additional || letters.length === MAX_GOALS;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +29,7 @@ export const GenerateForm = () => {
       skills: formData.skills,
       additional: formData.additional,
     });
+    setGen(gen + 1);
   };
 
   return (
@@ -74,7 +77,7 @@ export const GenerateForm = () => {
             setFormLocalData({ ...formData, additional: event.currentTarget.value });
           }}
         />
-        {!isLoading && letters.length === 0 && (
+        {!isLoading && gen === 0 && letters.length <= MAX_GOALS && (
           <PolymorphButton
             disabled={disabled}
             variant='primary'
@@ -90,7 +93,8 @@ export const GenerateForm = () => {
             <Loading />
           </PolymorphButton>
         )}
-        {!isLoading && letters.length > 0 && (
+        {/* {!isLoading && letters.length > 0 && ( */}
+        {!isLoading && gen > 0 && gen < MAX_GOALS && (
           <PolymorphButton
             variant='outline'
             disabled={letters.length === MAX_GOALS}
