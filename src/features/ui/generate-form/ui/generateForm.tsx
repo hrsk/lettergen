@@ -2,7 +2,7 @@ import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
 import { Input, PolymorphButton, Separator, Textarea } from "@/shared/ui";
 
-import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { useForm, type GenerateParameters } from "@/features/ui/generate-form/model/formStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
 import { useState } from "react";
@@ -32,6 +32,15 @@ export const GenerateForm = () => {
     setGen(gen + 1);
   };
 
+  const inputHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
+
+    setFormLocalData((previous: GenerateParameters) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className={s.wrapper}>
       <h1 className={clsx(s.titlePlaceholder, [formData.company && s.title, formData.job && s.title])}>
@@ -45,28 +54,25 @@ export const GenerateForm = () => {
         <div className={s.job}>
           <Input
             label='Job title'
+            name='job'
             placeholder='Product manager'
             value={formData.job}
-            onChange={(event) => {
-              setFormLocalData({ ...formData, job: event.currentTarget.value });
-            }}
+            onChange={inputHandleChange}
           />
           <Input
             label='Company'
+            name='company'
             placeholder='Apple'
             value={formData.company}
-            onChange={(event) => {
-              setFormLocalData({ ...formData, company: event.currentTarget.value });
-            }}
+            onChange={inputHandleChange}
           />
         </div>
         <Input
           label='I am good at...'
+          name='skills'
           placeholder='HTML, CSS and doing things in time'
           value={formData.skills}
-          onChange={(event) => {
-            setFormLocalData({ ...formData, skills: event.currentTarget.value });
-          }}
+          onChange={inputHandleChange}
         />
         <Textarea
           label={"Additional details"}

@@ -17,7 +17,7 @@ export type Letter = {
   text: LetterText;
 };
 
-type GenerateParameters = {
+export type GenerateParameters = {
   job: string;
   company: string;
   skills: string;
@@ -27,6 +27,7 @@ type GenerateParameters = {
 type FormState = {
   isLoading: boolean;
   letters: Letter[];
+  job: string;
 
   generate: (parameters: GenerateParameters) => Promise<void>;
   deleteLetter: (letterId: string) => void;
