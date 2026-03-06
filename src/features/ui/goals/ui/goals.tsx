@@ -1,15 +1,19 @@
 import Plus from "@/assets/icons/svg/Plus.svg?react";
-import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import { PolymorphButton } from "@/shared/ui";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import s from "./goals.module.scss";
 
 type Properties = { title: string; description: string };
 
 export const Goals = ({ title, description }: Properties) => {
-  const { letters } = useForm();
+  const { letters, resetLetter } = useLetter();
+
+  const { pathname } = useLocation();
+
+  const as = pathname === "/generation" ? "button" : Link;
 
   return (
     <div className={s.goalsWrapper}>
@@ -18,8 +22,9 @@ export const Goals = ({ title, description }: Properties) => {
         <span className={s.description}>{description}</span>
       </div>
       <PolymorphButton
-        as={Link}
+        as={Link || as}
         to={"/generation"}
+        onClick={resetLetter}
         className={clsx(s.goalsButton)}
         variant='primary'
       >

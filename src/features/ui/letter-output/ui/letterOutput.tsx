@@ -1,14 +1,15 @@
-import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 
-import { useForm, type LetterText } from "@/features/ui/generate-form/model/formStore";
+import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 
-import { useEffect, useState } from "react";
+import PingPong from "@/assets/icons/svg/Ping-Pong.svg?react";
+import { Scroll } from "@/shared/ui";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 import s from "./letterOutput.module.scss";
 
 export const LetterOutput = () => {
-  const { letters, isLoading } = useForm();
+  const { letters, isLoading } = useLetter();
   const [copy, setCopy] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,12 +30,12 @@ export const LetterOutput = () => {
   if (isLoading) {
     return (
       <article className={s.loading}>
-        <Ellipse />
+        <PingPong />
       </article>
     );
   }
 
-  if (!letters?.length) {
+  if (letters.length === 0) {
     return (
       <article className={clsx([s.letterWrapper])}>
         <p>Your personalized job application will appear here...</p>
@@ -44,25 +45,17 @@ export const LetterOutput = () => {
 
   return (
     <article className={clsx([s.letterWrapper])}>
-      <p>{letters.at(-1)?.text.title}</p>
-      <p>{letters.at(-1)?.text.company}</p>
-      <p>{letters.at(-1)?.text.skills}</p>
-      <p>{letters.at(-1)?.text.additional}</p>
-      <p>{letters.at(-1)?.text.other}</p>
-      <p>{letters.at(-1)?.text.thx}</p>
-      {/* {resultLetters ? <p>{resultLetters?.at(-1)}</p> : <p>Your personalized job application will appear here...</p>} */}
-      {/* <div className={s.cardContent}>
-        <p>Dear {company} Team,</p>
-        <p>I am writing to express my interest in the {job} position.</p>
-        <p>
-          My experience in the realm combined with my skills in {skills} make me a strong candidate for this role.
-          {` ${additional.charAt(0).toUpperCase()}${additional.slice(1)}.`} I am confident that my skills and enthusiasm
-          would translate into valuable contributions to your esteemed organization. Thank you for considering my
-          application. I eagerly await the opportunity to discuss my qualifications further.
-        </p>
-        <span></span>
-      </div> */}
-      <div style={{ maxWidth: "40px" }}>
+      <div className={s.content}>
+        <Scroll>
+          <p>{letters.at(-1)?.text.title}</p>
+          <p>{letters.at(-1)?.text.company}</p>
+          <p>{letters.at(-1)?.text.skills}</p>
+          <p>{letters.at(-1)?.text.additional}</p>
+          <p>{letters.at(-1)?.text.other}</p>
+          <p>{letters.at(-1)?.text.thx}</p>
+        </Scroll>
+      </div>
+      <div className={s.buttonsWrapper}>
         <button
           className={s.button}
           onClick={() => copyToClipboard(letters.at(-1)?.text)}

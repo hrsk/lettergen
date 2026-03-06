@@ -1,0 +1,16 @@
+@import 'overlayscrollbars/overlayscrollbars.css';
+
+.os-theme-custom {
+  --os-size: 10px;
+  --os-handle-bg: var(--gray-100);
+  --os-handle-bg-hover: var(--gray-100);
+  --os-handle-bg-active: var(--gray-100);
+  --os-padding-axis: 12px;
+  --os-track-border-perpendicular-size: 4px ;
+  --os-handle-border-radius: 4px;
+  --os-padding-perpendicular: 8px;
+  --os-handle-perpendicular-size: 4px;
+  --os-handle-perpendicular-size-hover: 4px;
+  --os-handle-perpendicular-size-active: 4px;
+}
+

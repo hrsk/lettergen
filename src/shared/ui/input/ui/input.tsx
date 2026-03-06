@@ -1,6 +1,5 @@
-import clsx from "clsx";
 import { type ComponentPropsWithRef, type KeyboardEvent } from "react";
-
+import clsx from "clsx";
 import s from "./input.module.scss";
 
 type Properties = {

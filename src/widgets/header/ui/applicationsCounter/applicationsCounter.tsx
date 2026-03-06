@@ -1,11 +1,11 @@
 import Completed from "@/assets/icons/svg/Check.svg?react";
-import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
 import s from "./ApplicationsCounter.module.scss";
 
 export const ApplicationsCounters = () => {
-  const { letters } = useForm();
+  const { letters } = useLetter();
 
   return (
     <div className={s.container}>

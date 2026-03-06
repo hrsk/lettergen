@@ -2,15 +2,15 @@ import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
 import { Input, PolymorphButton, Separator, Textarea } from "@/shared/ui";
 
-import { useForm, type GenerateParameters } from "@/features/ui/generate-form/model/formStore";
+import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
+import { resolveAfterDelay } from "@/shared/utils";
 import clsx from "clsx";
 import { useState, type ChangeEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
-  const { letters, isLoading, generate } = useForm();
-  const [gen, setGen] = useState<number>(0);
+  const { letters, isLoading, isCreated, generate } = useLetter();
   const [error, setError] = useState<boolean>(false);
 
   const [formData, setFormLocalData] = useState({
@@ -27,7 +27,7 @@ export const GenerateForm = () => {
     letters.length === MAX_GOALS ||
     error;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     generate({
       job: formData.job,
@@ -35,7 +35,8 @@ export const GenerateForm = () => {
       skills: formData.skills,
       additional: formData.additional,
     });
-    setGen(gen + 1);
+    await resolveAfterDelay(5000);
+    setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
 
   const inputHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +109,8 @@ export const GenerateForm = () => {
             {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}
           </span>
         </Textarea>
-        {!isLoading && gen === 0 && letters.length <= MAX_GOALS && (
+
+        {!isLoading && !isCreated && letters.length === 0 && (
           <PolymorphButton
             type='submit'
             disabled={disabled}
@@ -126,11 +128,10 @@ export const GenerateForm = () => {
             <Loading />
           </PolymorphButton>
         )}
-        {/* {!isLoading && letters.length > 0 && ( */}
-        {!isLoading && gen > 0 && gen <= MAX_GOALS && (
+        {!isLoading && !isCreated && letters.length > 0 && (
           <PolymorphButton
             variant='outline'
-            disabled={letters.length === MAX_GOALS}
+            disabled={disabled}
             className={s.button}
           >
             <Repeat /> {"Try Again"}

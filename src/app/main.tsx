@@ -1,11 +1,11 @@
-import { useForm } from "@/features/ui/generate-form/model/formStore";
+import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { Goals } from "@/features/ui/goals";
 import { Header } from "@/widgets/header/ui/header";
 import { Outlet } from "react-router-dom";
 import s from "./main.module.scss";
 
 export const Main = () => {
-  const { letters } = useForm();
+  const { letters } = useLetter();
 
   return (
     <main className={s.main}>

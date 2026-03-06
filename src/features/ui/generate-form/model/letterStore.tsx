@@ -24,13 +24,14 @@ export type GenerateParameters = {
   additional: string;
 };
 
-type FormState = {
+type LetterState = {
   isLoading: boolean;
+  isCreated: boolean;
   letters: Letter[];
-  job: string;
 
   generate: (parameters: GenerateParameters) => Promise<void>;
   deleteLetter: (letterId: string) => void;
+  resetLetter: () => void;
 };
 const getLettersFromLocalStorage = () => {
   try {
@@ -42,12 +43,12 @@ const getLettersFromLocalStorage = () => {
   return [];
 };
 
-export const useForm = create<FormState>()(
+export const useLetter = create<LetterState>()(
   persist(
     (set, get) => ({
       isLoading: false,
       letters: getLettersFromLocalStorage(),
-      lettersCount: 0,
+      isCreated: false,
 
       generate: async ({ job, company, skills, additional }) => {
         set({ isLoading: true });
@@ -67,6 +68,7 @@ export const useForm = create<FormState>()(
 
         set((state) => ({
           isLoading: false,
+          isCreate: true,
           letters: [...state.letters, { id: v1(), text: generatedLetter }],
         }));
       },
@@ -75,6 +77,9 @@ export const useForm = create<FormState>()(
           ...previous,
           letters: previous.letters.filter((letter) => letter.id !== letterId),
         }));
+      },
+      resetLetter: () => {
+        set({ isCreated: false, letters: [] });
       },
     }),
     {
