@@ -6,7 +6,7 @@ import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/
 import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
 import { resolveAfterDelay } from "@/shared/utils";
 import clsx from "clsx";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type SyntheticEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
@@ -27,7 +27,7 @@ export const GenerateForm = () => {
     letters.length === MAX_GOALS ||
     error;
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault();
     generate({
       job: formData.job,

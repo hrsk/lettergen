@@ -1,6 +1,6 @@
 import { type InstancePlugin, OverlayScrollbars } from "overlayscrollbars";
 
-const fieldTags = new Set(["input", "textarea", "select", "datalist"]);
+const fieldTags = "textarea";
 const getField = (osInstance: OverlayScrollbars) => {
   const { target, content } = osInstance.elements();
   const { childElementCount, firstElementChild } = target.contains(content) ? content : target;
@@ -8,9 +8,8 @@ const getField = (osInstance: OverlayScrollbars) => {
   return (
     firstElementChild &&
     childElementCount === 1 &&
-    //@ts-ignore
-    firstElementChild.dataset.overlayscrollbarsField !== null &&
-    fieldTags.has(firstElementChild.tagName.toLowerCase()) &&
+    firstElementChild !== null &&
+    fieldTags === firstElementChild.tagName.toLowerCase() &&
     (firstElementChild as HTMLElement)
   );
 };
@@ -24,8 +23,9 @@ export const osFieldPlugin = {
         return;
       }
 
-      // @ts-ignore
-      const fieldSizingSupported = field.style.fieldSizing === "content";
+      const fieldSizingSupported =
+        (field.style as CSSStyleDeclaration & { fieldSizing?: string }).fieldSizing === "content";
+
       const placeholderDiv = document.createElement("div");
       const updateField = () => {
         const { style, parentElement } = field;

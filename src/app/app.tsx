@@ -1,10 +1,10 @@
 import { Main } from "@/app";
 import { Dashboard, LettersGenerator } from "@/widgets";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 export const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path='/'
@@ -20,6 +20,6 @@ export const App = () => {
           />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };

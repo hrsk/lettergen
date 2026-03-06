@@ -45,7 +45,7 @@ const getLettersFromLocalStorage = () => {
 
 export const useLetter = create<LetterState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       isLoading: false,
       letters: getLettersFromLocalStorage(),
       isCreated: false,
