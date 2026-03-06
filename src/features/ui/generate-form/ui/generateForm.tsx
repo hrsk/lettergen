@@ -74,6 +74,7 @@ export const GenerateForm = () => {
             label='Job title'
             name='job'
             placeholder='Product manager'
+            disabled={isLoading}
             value={formData.job}
             onChange={inputHandleChange}
           />
@@ -81,6 +82,7 @@ export const GenerateForm = () => {
             label='Company'
             name='company'
             placeholder='Apple'
+            disabled={isLoading}
             value={formData.company}
             onChange={inputHandleChange}
           />
@@ -89,6 +91,7 @@ export const GenerateForm = () => {
           label='I am good at...'
           name='skills'
           placeholder='HTML, CSS and doing things in time'
+          disabled={isLoading}
           value={formData.skills}
           onChange={inputHandleChange}
         />
@@ -96,6 +99,7 @@ export const GenerateForm = () => {
           label={"Additional details"}
           name='additional'
           isError={error}
+          disabled={isLoading}
           placeholder={"Describe why you are a great fit or paste your bio"}
           value={formData.additional}
           onChange={textAreaHandleChange}
@@ -123,7 +127,7 @@ export const GenerateForm = () => {
           </PolymorphButton>
         )}
         {/* {!isLoading && letters.length > 0 && ( */}
-        {!isLoading && gen > 0 && gen < MAX_GOALS && (
+        {!isLoading && gen > 0 && gen <= MAX_GOALS && (
           <PolymorphButton
             variant='outline'
             disabled={letters.length === MAX_GOALS}

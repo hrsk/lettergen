@@ -28,6 +28,12 @@
   background-color: var(--light-100);
   outline: none;
 
+  &[disabled] {
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: var(--light-300);
+  }
+
   &:focus {
     box-shadow:
       0 0 0 4px #d3f8df,
