@@ -1,7 +1,7 @@
 import { type ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 
-import s from "./Separator.module.scss";
+import s from "./separator.module.scss";
 
 type Properties = ComponentPropsWithoutRef<"div"> & {
   orientation?: "horizontal" | "vertical";

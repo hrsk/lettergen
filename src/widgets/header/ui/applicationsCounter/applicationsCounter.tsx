@@ -2,7 +2,7 @@ import Completed from "@/assets/icons/svg/Check.svg?react";
 import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
-import s from "./ApplicationsCounter.module.scss";
+import s from "./applicationsCounter.module.scss";
 
 export const ApplicationsCounters = () => {
   const { letters } = useLetter();

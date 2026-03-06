@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { ComponentProps, ElementType, ReactNode } from "react";
-import s from "./PolymorphButton.module.scss";
+import s from "./polymorphButton.module.scss";
 
 type Variant = "primary" | "secondary" | "outline" | "text";
 
