@@ -3,14 +3,15 @@ import Repeat from "@/assets/icons/svg/Repeat.svg?react";
 import { Input, PolymorphButton, Separator, Textarea } from "@/shared/ui";
 
 import { useForm, type GenerateParameters } from "@/features/ui/generate-form/model/formStore";
-import { MAX_GOALS } from "@/shared/constants/constants";
+import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
 import clsx from "clsx";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
   const { letters, isLoading, generate } = useForm();
   const [gen, setGen] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
 
   const [formData, setFormLocalData] = useState({
     job: "",
@@ -19,7 +20,12 @@ export const GenerateForm = () => {
     additional: "",
   });
   const disabled =
-    !formData.job || !formData.company || !formData.skills || !formData.additional || letters.length === MAX_GOALS;
+    !formData.job ||
+    !formData.company ||
+    !formData.skills ||
+    !formData.additional ||
+    letters.length === MAX_GOALS ||
+    error;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,8 +38,20 @@ export const GenerateForm = () => {
     setGen(gen + 1);
   };
 
-  const inputHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const inputHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
+
+    setFormLocalData((previous: GenerateParameters) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+  const textAreaHandleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.currentTarget;
+    if (value.length > 1200) {
+      setError(true);
+    } else setError(false);
 
     setFormLocalData((previous: GenerateParameters) => ({
       ...previous,
@@ -76,15 +94,19 @@ export const GenerateForm = () => {
         />
         <Textarea
           label={"Additional details"}
-          isError={false}
+          name='additional'
+          isError={error}
           placeholder={"Describe why you are a great fit or paste your bio"}
           value={formData.additional}
-          onChange={(event) => {
-            setFormLocalData({ ...formData, additional: event.currentTarget.value });
-          }}
-        />
+          onChange={textAreaHandleChange}
+        >
+          <span className={clsx(s.length, [error && s.lengthError])}>
+            {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}
+          </span>
+        </Textarea>
         {!isLoading && gen === 0 && letters.length <= MAX_GOALS && (
           <PolymorphButton
+            type='submit'
             disabled={disabled}
             variant='primary'
           >
@@ -94,7 +116,8 @@ export const GenerateForm = () => {
         {isLoading && (
           <PolymorphButton
             variant='primary'
-            disabled={false}
+            disabled={isLoading}
+            className={s.loadingButton}
           >
             <Loading />
           </PolymorphButton>

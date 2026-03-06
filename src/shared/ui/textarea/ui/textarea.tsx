@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import { type ComponentPropsWithRef, type KeyboardEvent } from "react";
+import { type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
 import s from "./textarea.module.scss";
 
 type Properties = {
   label?: string;
   isError?: boolean;
   disabled?: boolean;
+  children: ReactNode;
 } & ComponentPropsWithRef<"textarea">;
 
 /**
@@ -16,7 +17,7 @@ type Properties = {
  * Наследует пропсы `<textarea>`.
  */
 
-export const Textarea = ({ label, isError = false, disabled, className, ...rest }: Properties) => {
+export const Textarea = ({ label, isError, disabled, className, children, ...rest }: Properties) => {
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Enter") {
@@ -33,7 +34,7 @@ export const Textarea = ({ label, isError = false, disabled, className, ...rest 
         onKeyDown={onKeyPressHandler}
         {...rest}
       />
-      <span className={clsx(s.length, [isError && s.lengthError])}>0/1200</span>
+      {children}
     </div>
   );
 };
