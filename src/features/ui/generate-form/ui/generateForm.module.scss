@@ -1,5 +1,5 @@
 .wrapper {
-  max-width: 544px;
+  // max-width: 544px;
   height: 100%;
   width: 100%;
 }
@@ -64,6 +64,10 @@
   font-size: 36px;
   padding-bottom: 12px;
   letter-spacing: -0.02em;
+
+  @media screen and (width <=510px) {
+    font-size: 32px;
+  }
 }
 
 .title {

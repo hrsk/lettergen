@@ -11,6 +11,10 @@
   .appHeaderButton {
     padding: 10px 18px;
     height: 44px;
+
+    @media screen and (width <=500px) {
+      display: none;
+    }
   }
 
   .letters {
@@ -19,11 +23,17 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(auto-fit);
     gap: 24px 16px;
 
     &:empty {
       display: none;
+    }
+  }
+
+  @media screen and (width <=768px) {
+    .letters {
+      width: 100%;
+      grid-template-columns: 1fr;
     }
   }
 }

@@ -74,4 +74,10 @@
 
 .textarea {
   resize: none;
+
+  @media screen and (width <=510px) {
+    &::placeholder {
+      font-size: var(--font-size-s);
+    }
+  }
 }

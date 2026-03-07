@@ -81,4 +81,28 @@
       font-weight: 400;
     }
   }
+
+  @media screen and (width <=510px) {
+    padding: 54px 36px;
+
+    .goalsContainer {
+      .goalsTitle {
+        font-size: 32px;
+      }
+
+      .description {
+        font-size: var(--font-size-m);
+      }
+    }
+
+    .goalsCounter {
+      .counterDescription {
+        font-size: var(--font-size-m);
+      }
+    }
+
+    .goalsButton {
+      padding: 0;
+    }
+  }
 }

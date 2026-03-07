@@ -35,7 +35,7 @@ export const GenerateForm = () => {
       skills: formData.skills,
       additional: formData.additional,
     });
-    await resolveAfterDelay(1_000_000);
+    await resolveAfterDelay(5000);
     setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
 
@@ -67,6 +67,7 @@ export const GenerateForm = () => {
       </h1>
       <Separator className={s.separator} />
       <form
+        autoComplete='off'
         className={s.form}
         onSubmit={handleSubmit}
       >

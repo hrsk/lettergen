@@ -29,18 +29,21 @@
   background-color: var(--light-100);
   outline: none;
 
-  &:-webkit-autofill,
-  :-webkit-autofill:hover,
-  :-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--dark-700);
-
-    // transition: background-color 500s ease-in-out 0s;
+  @media screen and (width <=510px) {
+    &::placeholder {
+      font-size: var(--font-size-s);
+    }
   }
 
   &[disabled] {
     cursor: not-allowed;
     box-shadow: none;
     background-color: var(--light-300);
+  }
+
+  &:-webkit-autofill:disabled {
+    box-shadow: 0 0 0 1000px transparent inset;
+    transition: background-color 9999s ease-out;
   }
 
   &:focus {
