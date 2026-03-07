@@ -14,11 +14,16 @@
   }
 
   .letters {
-    max-height: 768px;
+    // max-height: 768px;
+    padding-top: 24px;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fit);
     gap: 24px 16px;
+
+    &:empty {
+      display: none;
+    }
   }
 }

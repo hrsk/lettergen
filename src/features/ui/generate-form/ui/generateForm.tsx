@@ -35,7 +35,7 @@ export const GenerateForm = () => {
       skills: formData.skills,
       additional: formData.additional,
     });
-    await resolveAfterDelay(5000);
+    await resolveAfterDelay(1_000_000);
     setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
 

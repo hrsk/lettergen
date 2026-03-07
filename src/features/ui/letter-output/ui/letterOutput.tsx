@@ -2,7 +2,7 @@ import Copy from "@/assets/icons/svg/Copy.svg?react";
 
 import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 
-import PingPong from "@/assets/icons/svg/Ping-Pong.svg?react";
+import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
 import { Scroll } from "@/shared/ui";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -30,7 +30,7 @@ export const LetterOutput = () => {
   if (isLoading) {
     return (
       <article className={s.loading}>
-        <PingPong />
+        <Ellipse />
       </article>
     );
   }
@@ -45,16 +45,16 @@ export const LetterOutput = () => {
 
   return (
     <article className={clsx([s.letterWrapper])}>
-      <div className={s.content}>
-        <Scroll>
+      <Scroll>
+        <div className={s.content}>
           <p>{letters.at(-1)?.text.title}</p>
           <p>{letters.at(-1)?.text.company}</p>
           <p>{letters.at(-1)?.text.skills}</p>
           <p>{letters.at(-1)?.text.additional}</p>
           <p>{letters.at(-1)?.text.other}</p>
           <p>{letters.at(-1)?.text.thx}</p>
-        </Scroll>
-      </div>
+        </div>
+      </Scroll>
       <div className={s.buttonsWrapper}>
         <button
           className={s.button}
