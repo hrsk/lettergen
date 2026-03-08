@@ -39,28 +39,28 @@
     }
   }
 
-  .button {
-    outline: none;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    width: fit-content;
-    height: 24px;
-    gap: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    color: var(--gray-700);
-    font-size: var(--font-size-m);
-    line-height: 150%;
+  // .button {
+  //   outline: none;
+  //   cursor: pointer;
+  //   border: none;
+  //   background-color: transparent;
+  //   width: fit-content;
+  //   height: 24px;
+  //   gap: 8px;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   font-weight: 600;
+  //   color: var(--gray-700);
+  //   font-size: var(--font-size-m);
+  //   line-height: 150%;
 
-    & > svg {
-      path {
-        stroke: var(--gray-700);
-      }
-    }
-  }
+  //   & > svg {
+  //     path {
+  //       stroke: var(--gray-700);
+  //     }
+  //   }
+  // }
 }
 
 .buttonsWrapper {

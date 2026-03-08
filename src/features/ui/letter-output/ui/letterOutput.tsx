@@ -3,7 +3,7 @@ import Copy from "@/assets/icons/svg/Copy.svg?react";
 import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 
 import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
-import { Scroll } from "@/shared/ui";
+import { PolymorphButton, Scroll } from "@/shared/ui";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import s from "./letterOutput.module.scss";
@@ -56,13 +56,21 @@ export const LetterOutput = () => {
         </div>
       </Scroll>
       <div className={s.buttonsWrapper}>
-        <button
+        {/* <button
           className={s.button}
           onClick={() => copyToClipboard(letters.at(-1)?.text)}
         >
           {copy ? "Copied" : "Copy to clipboard"}
           <Copy />
-        </button>
+        </button> */}
+        <PolymorphButton
+          variant='text'
+          // className={s.button}
+          onClick={() => copyToClipboard(letters.at(-1)?.text)}
+        >
+          {copy ? "Copied" : "Copy to clipboard"}
+          <Copy />
+        </PolymorphButton>
       </div>
     </article>
   );
