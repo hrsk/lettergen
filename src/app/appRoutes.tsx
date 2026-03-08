@@ -1,13 +1,14 @@
 import { Main } from "@/app";
+import { ROUTES_PATHS } from "@/shared/config";
 import { Dashboard, LettersGenerator } from "@/widgets";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
-export const App = () => {
+export const AppRoutes = () => {
   return (
     <HashRouter>
       <Routes>
         <Route
-          path='/'
+          path={ROUTES_PATHS.MAIN}
           element={<Main />}
         >
           <Route
@@ -15,7 +16,7 @@ export const App = () => {
             element={<Dashboard />}
           />
           <Route
-            path='/generation'
+            path={ROUTES_PATHS.GENERATION}
             element={<LettersGenerator />}
           />
         </Route>

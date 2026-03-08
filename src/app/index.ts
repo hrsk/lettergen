@@ -1,3 +1,3 @@
-export { App } from "./app";
+export { AppRoutes } from "./appRoutes";
 
 export { Main } from "./main";

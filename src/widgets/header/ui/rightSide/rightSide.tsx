@@ -5,6 +5,7 @@ import { Button } from "@/shared/ui";
 import { ApplicationsCounters } from "@/widgets/header/ui/applicationsCounter";
 import { Link } from "react-router-dom";
 import s from "./rightSide.module.scss";
+import { ROUTES_PATHS } from "@/shared/config";
 
 type Properties = {
   className?: string;
@@ -15,7 +16,7 @@ export const RightSide = ({ className }: Properties) => {
       <ApplicationsCounters />
       <Button
         as={Link}
-        to={"/"}
+        to={ROUTES_PATHS.MAIN}
         className={s.button}
       >
         <Home />

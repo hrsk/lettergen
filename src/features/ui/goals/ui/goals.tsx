@@ -5,6 +5,7 @@ import { Button } from "@/shared/ui";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import s from "./goals.module.scss";
+import { ROUTES_PATHS } from "@/shared/config";
 
 type Properties = { title: string; description: string };
 
@@ -20,7 +21,7 @@ export const Goals = ({ title, description }: Properties) => {
         <span className={s.description}>{description}</span>
       </div>
 
-      {pathname === "/generation" ? (
+      {pathname === ROUTES_PATHS.GENERATION ? (
         <Button
           onClick={() => resetLetter(false)}
           className={clsx(s.goalsButton)}
@@ -31,7 +32,7 @@ export const Goals = ({ title, description }: Properties) => {
       ) : (
         <Button
           as={Link}
-          to={"/generation"}
+          to={ROUTES_PATHS.GENERATION}
           className={clsx(s.goalsButton)}
           variant='primary'
         >
