@@ -30,8 +30,9 @@ type LetterState = {
   letters: Letter[];
 
   generate: (parameters: GenerateParameters) => Promise<void>;
+  tryAgain: (parameters: GenerateParameters) => Promise<void>;
   deleteLetter: (letterId: string) => void;
-  resetLetter: () => void;
+  resetLetter: (isCreate: boolean) => void;
 };
 const getLettersFromLocalStorage = () => {
   try {
@@ -68,7 +69,7 @@ export const useLetter = create<LetterState>()(
 
         set((state) => ({
           isLoading: false,
-          isCreate: true,
+          isCreated: true,
           letters: [...state.letters, { id: v1(), text: generatedLetter }],
         }));
       },
@@ -78,8 +79,30 @@ export const useLetter = create<LetterState>()(
           letters: previous.letters.filter((letter) => letter.id !== letterId),
         }));
       },
-      resetLetter: () => {
-        set({ isCreated: false, letters: [] });
+      resetLetter: (isCreated) => {
+        set({ isCreated });
+      },
+      tryAgain: async ({ job, company, skills, additional }) => {
+        set({ isLoading: true });
+
+        await delayPromise(2000);
+
+        const generatedLetter: LetterText = {
+          title: `Dear ${company} Team,`,
+          company: `I am writing to express my interest in the ${job} position.`,
+          skills: String.raw`My experience in the realm combined with my skills in ${skills}
+          make me a strong candidate for this role.`,
+          additional: `${additional.charAt(0).toUpperCase()}${additional.slice(1)}`,
+          other:
+            "I am confident that my skills and enthusiasm would translate into valuable contributions to your esteemed organization.",
+          thx: "Thank you for considering my application. I eagerly await the opportunity to discuss my qualifications further.",
+        };
+
+        set((state) => ({
+          isLoading: false,
+          isCreated: true,
+          letters: [...state.letters.slice(0, -1), { id: v1(), text: generatedLetter }],
+        }));
       },
     }),
     {

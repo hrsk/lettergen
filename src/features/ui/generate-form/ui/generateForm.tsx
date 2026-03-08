@@ -10,7 +10,7 @@ import { useState, type ChangeEvent, type SyntheticEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
-  const { letters, isLoading, isCreated, generate } = useLetter();
+  const { letters, isLoading, isCreated, generate, tryAgain } = useLetter();
   const [error, setError] = useState<boolean>(false);
 
   const [formData, setFormLocalData] = useState({
@@ -19,22 +19,25 @@ export const GenerateForm = () => {
     skills: "",
     additional: "",
   });
-  const disabled =
-    !formData.job ||
-    !formData.company ||
-    !formData.skills ||
-    !formData.additional ||
-    letters.length === MAX_GOALS ||
-    error;
+  const disabled = !formData.job || !formData.company || !formData.skills || !formData.additional || error;
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault();
-    generate({
-      job: formData.job,
-      company: formData.company,
-      skills: formData.skills,
-      additional: formData.additional,
-    });
+    if (isCreated) {
+      tryAgain({
+        job: formData.job,
+        company: formData.company,
+        skills: formData.skills,
+        additional: formData.additional,
+      });
+    } else {
+      generate({
+        job: formData.job,
+        company: formData.company,
+        skills: formData.skills,
+        additional: formData.additional,
+      });
+    }
     await delayPromise(2000);
     setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
@@ -111,9 +114,8 @@ export const GenerateForm = () => {
           </span>
         </Textarea>
 
-        {!isLoading && !isCreated && letters.length === 0 && (
+        {!isLoading && isCreated === false && letters.length < MAX_GOALS && (
           <Button
-            type='submit'
             disabled={disabled}
             variant='primary'
           >
@@ -129,7 +131,7 @@ export const GenerateForm = () => {
             <Loading />
           </Button>
         )}
-        {!isLoading && !isCreated && letters.length > 0 && (
+        {!isLoading && isCreated === true && letters.length > 0 && (
           <Button
             variant='outline'
             disabled={disabled}

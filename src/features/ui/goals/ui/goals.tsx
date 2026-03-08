@@ -22,7 +22,7 @@ export const Goals = ({ title, description }: Properties) => {
 
       {pathname === "/generation" ? (
         <Button
-          onClick={resetLetter}
+          onClick={() => resetLetter(false)}
           className={clsx(s.goalsButton)}
           variant='primary'
         >
