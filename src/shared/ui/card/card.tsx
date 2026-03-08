@@ -1,56 +1,56 @@
-import Copy from "@/assets/icons/svg/Copy.svg?react";
-import Delete from "@/assets/icons/svg/Trash.svg?react";
-import { useLetter, type Letter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
-import { useEffect, useState } from "react";
+import clsx from "clsx";
+import { type ComponentProps } from "react";
 import s from "./card.module.scss";
-import { Button } from "@/shared/ui/button";
 
-export const Card = ({ letter }: { letter: Letter }) => {
-  const { deleteLetter } = useLetter();
-
-  const [copy, setCopy] = useState<boolean>(false);
-
-  useEffect(() => {
-    const timerID = setTimeout(() => setCopy(false), 1500);
-    return () => clearTimeout(timerID);
-  }, [copy]);
-
-  const copyToClipboard = async (copyText: LetterText) => {
-    await navigator.clipboard.writeText(Object.values(copyText).join(" "));
-    setCopy(true);
-  };
-
+const Card = ({ className, size = "default", ...properties }: ComponentProps<"div"> & { size?: "default" | "sm" }) => {
   return (
-    <div className={s.letterCard}>
-      <div className={s.cardContent}>
-        <p>{letter.text.title}</p>
-        <p>{letter.text.company}</p>
-        <p>{letter.text.skills}</p>
-        <p>{letter.text.additional}</p>
-        <p>{letter.text.other}</p>
-        <p>{letter.text.thx}</p>
-        {/* <p>{title}</p>
-        <p className={s.last}>{text}</p>
-        <span></span> */}
-      </div>
-      <div className={s.cardFooter}>
-        <Button
-          variant='text'
-          // className={s.button}
-          onClick={() => deleteLetter(letter.id)}
-        >
-          <Delete />
-          Delete
-        </Button>
-        <Button
-          variant='text'
-          // className={s.button}
-          onClick={() => copyToClipboard(letter.text)}
-        >
-          {copy ? "Copied" : "Copy to clipboard"}
-          <Copy />
-        </Button>
-      </div>
-    </div>
+    <div
+      data-slot='card'
+      data-size={size}
+      className={clsx(s.letterCard, s[`letterCard--${size}`], className)}
+      {...properties}
+    />
   );
 };
+
+const CardHeader = ({ className, ...properties }: ComponentProps<"div">) => {
+  return (
+    <div
+      data-slot='card-header'
+      className={clsx(className)}
+      {...properties}
+    />
+  );
+};
+
+const CardTitle = ({ className, ...properties }: ComponentProps<"div">) => {
+  return (
+    <div
+      data-slot='card-title'
+      className={clsx(className)}
+      {...properties}
+    />
+  );
+};
+
+const CardContent = ({ className, ...properties }: ComponentProps<"div">) => {
+  return (
+    <div
+      data-slot='card-content'
+      className={clsx(s.cardContent, className)}
+      {...properties}
+    />
+  );
+};
+
+const CardFooter = ({ className, ...properties }: ComponentProps<"div">) => {
+  return (
+    <div
+      data-slot='card-footer'
+      className={clsx(className)}
+      {...properties}
+    />
+  );
+};
+
+export { Card, CardContent, CardFooter, CardHeader, CardTitle };

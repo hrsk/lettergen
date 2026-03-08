@@ -1,9 +1,10 @@
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
-import { Button, Scroll } from "@/shared/ui";
+import { Button, Card, CardContent, CardFooter, Scroll } from "@/shared/ui";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+
 import s from "./letterOutput.module.scss";
 
 export const LetterOutput = () => {
@@ -42,18 +43,18 @@ export const LetterOutput = () => {
   }
 
   return (
-    <article className={clsx([s.letterWrapper])}>
+    <Card>
       <Scroll>
-        <div className={s.content}>
+        <CardContent className={s.content}>
           <p>{letters.at(-1)?.text.title}</p>
           <p>{letters.at(-1)?.text.company}</p>
           <p>{letters.at(-1)?.text.skills}</p>
           <p>{letters.at(-1)?.text.additional}</p>
           <p>{letters.at(-1)?.text.other}</p>
           <p>{letters.at(-1)?.text.thx}</p>
-        </div>
+        </CardContent>
       </Scroll>
-      <div className={s.buttonsWrapper}>
+      <CardFooter className={s.buttonsWrapper}>
         <Button
           variant='text'
           onClick={() => copyToClipboard(letters.at(-1)?.text)}
@@ -61,7 +62,7 @@ export const LetterOutput = () => {
           {copy ? "Copied" : "Copy to clipboard"}
           <Copy />
         </Button>
-      </div>
-    </article>
+      </CardFooter>
+    </Card>
   );
 };

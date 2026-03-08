@@ -1,6 +1,8 @@
 import Plus from "@/assets/icons/svg/Plus.svg?react";
-import { useLetter } from "@/features/ui/generate-form/model/letterStore";
-import { Card, Header, Button } from "@/shared/ui";
+
+import { LetterPreview } from "@/features/ui";
+import { useLetter } from "@/features/ui/generate-form";
+import { Button, Header } from "@/shared/ui";
 import { Link } from "react-router-dom";
 import s from "./dashboard.module.scss";
 
@@ -24,10 +26,14 @@ export const Dashboard = () => {
       <div className={s.letters}>
         {letters?.map((letter) => {
           return (
-            <Card
-              key={letter.id}
+            <LetterPreview
               letter={letter}
+              key={letter.id}
             />
+            // <Card
+            //   key={letter.id}
+            //   letter={letter}
+            // />
           );
         })}
       </div>
