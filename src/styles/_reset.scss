@@ -7,11 +7,6 @@
   min-width: 0;
 }
 
-html,
-body {
-  height: 100%;
-}
-
 img,
 picture,
 video,
@@ -45,6 +40,4 @@ ol {
 /* Выставляем основные настройки по-умолчанию для body */
 body {
   scroll-behavior: smooth;
-  min-height: 100vh;
-  line-height: 1.5;
 }
