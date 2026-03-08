@@ -13,23 +13,31 @@ export const Goals = ({ title, description }: Properties) => {
 
   const { pathname } = useLocation();
 
-  const as = pathname === "/generation" ? "button" : Link;
-
   return (
     <div className={s.goalsWrapper}>
       <div className={s.goalsContainer}>
         <h3 className={s.goalsTitle}>{title}</h3>
         <span className={s.description}>{description}</span>
       </div>
-      <Button
-        as={Link || as}
-        to={"/generation"}
-        onClick={resetLetter}
-        className={clsx(s.goalsButton)}
-        variant='primary'
-      >
-        <Plus /> {"Create New"}
-      </Button>
+
+      {pathname === "/generation" ? (
+        <Button
+          onClick={resetLetter}
+          className={clsx(s.goalsButton)}
+          variant='primary'
+        >
+          <Plus /> {"Create New"}
+        </Button>
+      ) : (
+        <Button
+          as={Link}
+          to={"/generation"}
+          className={clsx(s.goalsButton)}
+          variant='primary'
+        >
+          <Plus /> {"Create New"}
+        </Button>
+      )}
       <div className={s.goalsCounter}>
         <ul className={s.items}>
           {Array.from({ length: MAX_GOALS }).map((_, index) => (
