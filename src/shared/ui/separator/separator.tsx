@@ -1,6 +1,5 @@
 import { type ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
-
 import s from "./separator.module.scss";
 
 type Properties = ComponentPropsWithoutRef<"div"> & {

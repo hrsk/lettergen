@@ -1,1 +1,1 @@
-export { resolveAfterDelay } from "./delayPromise";
+export { delayPromise } from "./delayPromise";

@@ -10,15 +10,6 @@ type Properties = {
   className?: string;
 } & ComponentPropsWithRef<"input">;
 
-/**
- * - `type?` — тип поля ввода (`'text'`, `'password'`, `'search'`, `'email'`)
- * - `label?` — метка над полем
- * - `error?` — сообщение об ошибке
- * - `disabled?` — отключает поле
- *
- * Наследует все пропсы `<input>`.
- */
-
 export const Input = ({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;

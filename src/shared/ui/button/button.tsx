@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { ComponentProps, ElementType, ReactNode } from "react";
-import s from "./polymorphButton.module.scss";
+import s from "./button.module.scss";
 
 type Variant = "primary" | "secondary" | "outline" | "text";
 
@@ -17,7 +17,7 @@ type EditableComponentProperties<E extends ElementType> = ButtonComponentOwnProp
 
 const __DEFAULT_ELEMENT__ = "button" as const;
 
-export const PolymorphButton = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
+export const Button = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
   as,
   children,
   disabled,

@@ -1,4 +1,4 @@
-import { resolveAfterDelay } from "@/shared/utils";
+import { delayPromise } from "@/shared/utils";
 import { v1 } from "uuid";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -53,7 +53,7 @@ export const useLetter = create<LetterState>()(
       generate: async ({ job, company, skills, additional }) => {
         set({ isLoading: true });
 
-        await resolveAfterDelay(5000);
+        await delayPromise(2000);
 
         const generatedLetter: LetterText = {
           title: `Dear ${company} Team,`,
@@ -92,61 +92,3 @@ export const useLetter = create<LetterState>()(
     },
   ),
 );
-
-// export const useForm = create(() => ({
-//   job: "" as string,
-//   company: "" as string,
-//   skills: "" as string,
-//   additional: "" as string,
-//   isLoading: false as boolean,
-//   lettersCount: 0 as number,
-//   letters: [] as Letter[],
-// }));
-
-// export const generate = async ({
-//   job,
-//   company,
-//   skills,
-//   additional,
-// }: {
-//   job: string;
-//   company: string;
-//   skills: string;
-//   additional: string;
-// }) => {
-//   useForm.setState({ isLoading: true });
-//   await resolveAfterDelay(5000).then(() => {
-//     useForm.setState({ isLoading: false });
-//   });
-
-//   const generatedLetter: LetterText = {
-//     title: `Dear ${company} Team,`,
-//     company: `I am writing to express my interest in the ${job} position.`,
-//     skills: `My experience in the realm combined with my skills in ${skills} make me a strong candidate for this role.`,
-//     additional: `${additional.charAt(0).toUpperCase()}${additional.slice(1)}`,
-//     other: `I am confident that my skills and enthusiasm would translate into valuable contributions to your esteemed
-// organization.`,
-//     thx: "Thank you for considering my application. I eagerly await the opportunity to discuss my qualifications further.",
-//   };
-
-//   return useForm.setState((previous) => ({
-//     ...previous,
-//     letters: [...previous.letters, { id: v1(), text: generatedLetter }],
-//     lettersCount: previous.lettersCount + 1,
-//   }));
-//   // return generatedLetter;
-// };
-// export const getLettersFromLocalStorage = (localStorageLetters: Letter[]) => {
-//   return useForm.setState((previous) => ({
-//     ...previous,
-//     letters: [...previous.letters, ...localStorageLetters],
-//     lettersCount: localStorageLetters.length,
-//   }));
-// };
-
-// export const deleteLetter = (letterId: string) => {
-//   return useForm.setState((previous) => ({
-//     ...previous,
-//     letters: previous.letters.filter((letter) => letter.id !== letterId),
-//   }));
-// };

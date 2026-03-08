@@ -13,7 +13,6 @@ const meta: MetaType = {
   args: {
     placeholder: "Placeholder...",
     label: "Label",
-    value: "",
   },
 };
 

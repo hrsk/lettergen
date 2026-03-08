@@ -3,11 +3,11 @@ import { action } from "storybook/actions";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { MemoryRouter } from "react-router-dom";
 
-import { PolymorphButton } from "@/shared/ui";
+import { Button } from "@/shared/ui";
 
-const meta: Meta<typeof PolymorphButton> = {
-  title: "ui/PolymorphButton",
-  component: PolymorphButton,
+const meta: Meta<typeof Button> = {
+  title: "ui/Button",
+  component: Button,
   decorators: [
     (Story) => (
       <MemoryRouter>
@@ -33,7 +33,7 @@ const meta: Meta<typeof PolymorphButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof PolymorphButton>;
+type Story = StoryObj<typeof Button>;
 
 const onClickHandler = action("Click");
 
@@ -65,7 +65,7 @@ export const AsLink: Story = {
     variant: "primary",
     disabled: false,
     children: "Link to",
-    href: "http://localhost:6006/?path=/story/ui-polymorphbutton--primary",
+    href: "http://localhost:6006/?path=/story/ui-button--primary",
     as: "a",
   },
 };

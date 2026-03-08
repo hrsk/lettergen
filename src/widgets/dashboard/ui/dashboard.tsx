@@ -1,6 +1,6 @@
 import Plus from "@/assets/icons/svg/Plus.svg?react";
 import { useLetter } from "@/features/ui/generate-form/model/letterStore";
-import { Card, Header, PolymorphButton } from "@/shared/ui";
+import { Card, Header, Button } from "@/shared/ui";
 import { Link } from "react-router-dom";
 import s from "./dashboard.module.scss";
 
@@ -11,7 +11,7 @@ export const Dashboard = () => {
     <div className={s.mainPageWrapper}>
       <Header>
         <h1>Applications</h1>
-        <PolymorphButton
+        <Button
           as={Link}
           to={"/generation"}
           variant={"primary"}
@@ -19,7 +19,7 @@ export const Dashboard = () => {
         >
           <Plus />
           {"Create New"}
-        </PolymorphButton>
+        </Button>
       </Header>
       <div className={s.letters}>
         {letters?.map((letter) => {

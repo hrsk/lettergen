@@ -3,7 +3,7 @@ import Delete from "@/assets/icons/svg/Trash.svg?react";
 import { useLetter, type Letter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 import { useEffect, useState } from "react";
 import s from "./card.module.scss";
-import { PolymorphButton } from "@/shared/ui/polymorph-button";
+import { Button } from "@/shared/ui/button";
 
 export const Card = ({ letter }: { letter: Letter }) => {
   const { deleteLetter } = useLetter();
@@ -34,22 +34,22 @@ export const Card = ({ letter }: { letter: Letter }) => {
         <span></span> */}
       </div>
       <div className={s.cardFooter}>
-        <PolymorphButton
+        <Button
           variant='text'
           // className={s.button}
           onClick={() => deleteLetter(letter.id)}
         >
           <Delete />
           Delete
-        </PolymorphButton>
-        <PolymorphButton
+        </Button>
+        <Button
           variant='text'
           // className={s.button}
           onClick={() => copyToClipboard(letter.text)}
         >
           {copy ? "Copied" : "Copy to clipboard"}
           <Copy />
-        </PolymorphButton>
+        </Button>
       </div>
     </div>
   );

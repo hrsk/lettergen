@@ -1,10 +1,10 @@
 import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
-import { Input, PolymorphButton, Separator, Textarea } from "@/shared/ui";
+import { Input, Button, Separator, Textarea } from "@/shared/ui";
 
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
-import { resolveAfterDelay } from "@/shared/utils";
+import { delayPromise } from "@/shared/utils";
 import clsx from "clsx";
 import { useState, type ChangeEvent, type SyntheticEvent } from "react";
 import s from "./generateForm.module.scss";
@@ -35,7 +35,7 @@ export const GenerateForm = () => {
       skills: formData.skills,
       additional: formData.additional,
     });
-    await resolveAfterDelay(5000);
+    await delayPromise(2000);
     setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
 
@@ -112,31 +112,31 @@ export const GenerateForm = () => {
         </Textarea>
 
         {!isLoading && !isCreated && letters.length === 0 && (
-          <PolymorphButton
+          <Button
             type='submit'
             disabled={disabled}
             variant='primary'
           >
             Generate Now
-          </PolymorphButton>
+          </Button>
         )}
         {isLoading && (
-          <PolymorphButton
+          <Button
             variant='primary'
             disabled={isLoading}
             className={s.loadingButton}
           >
             <Loading />
-          </PolymorphButton>
+          </Button>
         )}
         {!isLoading && !isCreated && letters.length > 0 && (
-          <PolymorphButton
+          <Button
             variant='outline'
             disabled={disabled}
             className={s.button}
           >
             <Repeat /> {"Try Again"}
-          </PolymorphButton>
+          </Button>
         )}
       </form>
     </div>
