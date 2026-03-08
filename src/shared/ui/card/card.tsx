@@ -1,8 +1,8 @@
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 import Delete from "@/assets/icons/svg/Trash.svg?react";
-import s from "./card.module.scss";
 import { useLetter, type Letter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 import { useEffect, useState } from "react";
+import s from "./card.module.scss";
 
 export const Card = ({ letter }: { letter: Letter }) => {
   const { deleteLetter } = useLetter();

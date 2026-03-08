@@ -5,7 +5,7 @@ import s from "./input.module.scss";
 type Properties = {
   type?: "text" | "password" | "search" | "email";
   label?: string;
-  error?: string;
+  error?: boolean;
   disabled?: boolean;
   className?: string;
 } & ComponentPropsWithRef<"input">;
@@ -19,7 +19,7 @@ type Properties = {
  * Наследует все пропсы `<input>`.
  */
 
-export const Input = ({ type = "text", label, error, disabled, className, ...rest }: Properties) => {
+export const Input = ({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Enter") {
@@ -32,7 +32,7 @@ export const Input = ({ type = "text", label, error, disabled, className, ...res
       {label && <label className={s.label}>{label}</label>}
       <input
         type={type}
-        className={clsx(s.input)}
+        className={clsx(s.input, [error && s.isError])}
         disabled={disabled}
         onKeyDown={onKeyPressHandler}
         {...rest}
