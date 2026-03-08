@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
+import { memo, type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
 import s from "./textarea.module.scss";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
@@ -10,7 +10,7 @@ type Properties = {
   children: ReactNode;
 } & ComponentPropsWithRef<"textarea">;
 
-export const Textarea = ({ label, isError, disabled, className, children, ...rest }: Properties) => {
+export const Textarea = memo(({ label, isError, disabled, className, children, ...rest }: Properties) => {
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Enter") {
@@ -36,4 +36,4 @@ export const Textarea = ({ label, isError, disabled, className, children, ...res
       {children}
     </div>
   );
-};
+});

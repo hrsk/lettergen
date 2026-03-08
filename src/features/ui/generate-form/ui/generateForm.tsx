@@ -1,12 +1,11 @@
 import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
-import { Input, Button, Separator, Textarea } from "@/shared/ui";
-
+import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
 import { delayPromise } from "@/shared/utils";
 import clsx from "clsx";
-import { useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { useCallback, useState, type ChangeEvent, type SyntheticEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
@@ -42,26 +41,20 @@ export const GenerateForm = () => {
     setFormLocalData({ job: "", company: "", skills: "", additional: "" });
   };
 
-  const inputHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.currentTarget;
+
+    if (event.currentTarget instanceof HTMLTextAreaElement) {
+      setError(value.length > 1200);
+    } else {
+      setError(false);
+    }
 
     setFormLocalData((previous: GenerateParameters) => ({
       ...previous,
       [name]: value,
     }));
-  };
-
-  const textAreaHandleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = event.currentTarget;
-    if (value.length > 1200) {
-      setError(true);
-    } else setError(false);
-
-    setFormLocalData((previous: GenerateParameters) => ({
-      ...previous,
-      [name]: value,
-    }));
-  };
+  }, []);
 
   return (
     <div className={s.wrapper}>
@@ -81,7 +74,7 @@ export const GenerateForm = () => {
             placeholder='Product manager'
             disabled={isLoading}
             value={formData.job}
-            onChange={inputHandleChange}
+            onChange={handleChange}
           />
           <Input
             label='Company'
@@ -89,7 +82,7 @@ export const GenerateForm = () => {
             placeholder='Apple'
             disabled={isLoading}
             value={formData.company}
-            onChange={inputHandleChange}
+            onChange={handleChange}
           />
         </div>
         <Input
@@ -98,7 +91,7 @@ export const GenerateForm = () => {
           placeholder='HTML, CSS and doing things in time'
           disabled={isLoading}
           value={formData.skills}
-          onChange={inputHandleChange}
+          onChange={handleChange}
         />
         <Textarea
           label={"Additional details"}
@@ -107,7 +100,7 @@ export const GenerateForm = () => {
           disabled={isLoading}
           placeholder={"Describe why you are a great fit or paste your bio"}
           value={formData.additional}
-          onChange={textAreaHandleChange}
+          onChange={handleChange}
         >
           <span className={clsx(s.length, [error && s.lengthError])}>
             {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}

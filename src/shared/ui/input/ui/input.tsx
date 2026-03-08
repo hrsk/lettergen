@@ -1,4 +1,4 @@
-import { type ComponentPropsWithRef, type KeyboardEvent } from "react";
+import { memo, type ComponentPropsWithRef, type KeyboardEvent } from "react";
 import clsx from "clsx";
 import s from "./input.module.scss";
 
@@ -10,7 +10,7 @@ type Properties = {
   className?: string;
 } & ComponentPropsWithRef<"input">;
 
-export const Input = ({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
+export const Input = memo(({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;
     if (key === "Enter") {
@@ -30,4 +30,4 @@ export const Input = ({ type = "text", label, error = false, disabled, className
       />
     </div>
   );
-};
+});
