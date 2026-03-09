@@ -5,7 +5,7 @@ import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/
 import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
 import { delayPromise } from "@/shared/utils";
 import clsx from "clsx";
-import { useCallback, useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { useCallback, useState, type ChangeEvent, type SyntheticEvent, type KeyboardEvent, useRef } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
@@ -19,6 +19,8 @@ export const GenerateForm = () => {
     additional: "",
   });
   const disabled = !formData.job || !formData.company || !formData.skills || !formData.additional || error;
+
+  const formReference = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault();
@@ -56,6 +58,12 @@ export const GenerateForm = () => {
     }));
   }, []);
 
+  const onKeyPressHandler = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      formReference.current?.requestSubmit();
+    }
+  };
+
   return (
     <div className={s.wrapper}>
       <h1 className={clsx(s.titlePlaceholder, [formData.company && s.title, formData.job && s.title])}>
@@ -63,6 +71,7 @@ export const GenerateForm = () => {
       </h1>
       <Separator className={s.separator} />
       <form
+        ref={formReference}
         autoComplete='off'
         className={s.form}
         onSubmit={handleSubmit}
@@ -101,6 +110,7 @@ export const GenerateForm = () => {
           placeholder={"Describe why you are a great fit or paste your bio"}
           value={formData.additional}
           onChange={handleChange}
+          onEnter={onKeyPressHandler}
         >
           <span className={clsx(s.length, [error && s.lengthError])}>
             {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}
@@ -109,8 +119,10 @@ export const GenerateForm = () => {
 
         {!isLoading && isCreated === false && letters.length < MAX_GOALS && (
           <Button
+            type='submit'
             disabled={disabled}
             variant='primary'
+            onKeyDown={onKeyPressHandler}
           >
             Generate Now
           </Button>
@@ -126,9 +138,11 @@ export const GenerateForm = () => {
         )}
         {!isLoading && isCreated === true && letters.length > 0 && (
           <Button
+            type='submit'
             variant='outline'
             disabled={disabled}
             className={s.button}
+            onKeyDown={onKeyPressHandler}
           >
             <Repeat /> {"Try Again"}
           </Button>

@@ -1,5 +1,5 @@
-import { memo, type ComponentPropsWithRef, type KeyboardEvent } from "react";
 import clsx from "clsx";
+import { memo, type ComponentPropsWithRef } from "react";
 import s from "./input.module.scss";
 
 type Properties = {
@@ -11,13 +11,6 @@ type Properties = {
 } & ComponentPropsWithRef<"input">;
 
 export const Input = memo(({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
-  const onKeyPressHandler = (event: KeyboardEvent) => {
-    const { key } = event;
-    if (key === "Enter") {
-      event.preventDefault();
-    }
-  };
-
   return (
     <div className={s.wrapper}>
       {label && <label className={s.label}>{label}</label>}
@@ -25,7 +18,6 @@ export const Input = memo(({ type = "text", label, error = false, disabled, clas
         type={type}
         className={clsx(s.input, [error && s.isError])}
         disabled={disabled}
-        onKeyDown={onKeyPressHandler}
         {...rest}
       />
     </div>

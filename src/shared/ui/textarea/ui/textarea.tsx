@@ -8,16 +8,10 @@ type Properties = {
   isError?: boolean;
   disabled?: boolean;
   children: ReactNode;
+  onEnter?: (event: KeyboardEvent) => void;
 } & ComponentPropsWithRef<"textarea">;
 
-export const Textarea = memo(({ label, isError, disabled, className, children, ...rest }: Properties) => {
-  const onKeyPressHandler = (event: KeyboardEvent) => {
-    const { key } = event;
-    if (key === "Enter") {
-      event.preventDefault();
-    }
-  };
-
+export const Textarea = memo(({ label, isError, disabled, className, children, onEnter, ...rest }: Properties) => {
   return (
     <div className={s.wrapper}>
       {label && <label className={s.label}>{label}</label>}
@@ -27,7 +21,7 @@ export const Textarea = memo(({ label, isError, disabled, className, children, .
       >
         <textarea
           data-overlayscrollbars-field
-          onKeyDown={onKeyPressHandler}
+          onKeyDown={onEnter}
           disabled={disabled}
           className={clsx(s.textarea, [isError && s.isError])}
           {...rest}
