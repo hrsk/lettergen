@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { ComponentProps, ElementType, ReactNode } from "react";
-import s from "./button.module.scss";
+import styles from "./button.module.scss";
 
 type Variant = "primary" | "secondary" | "outline" | "text";
 
@@ -29,7 +29,7 @@ export const Button = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
 
   return (
     <Component
-      className={clsx(s.button, s[`button--${variant}`], className)}
+      className={clsx(styles.button, styles[`button--${variant}`], className)}
       disabled={disabled}
       {...rest}
     >

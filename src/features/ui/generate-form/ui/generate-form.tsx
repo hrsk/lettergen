@@ -6,7 +6,7 @@ import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { delayPromise } from "@/shared/utils";
 import clsx from "clsx";
 import { useCallback, useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from "react";
-import s from "./generateForm.module.scss";
+import styles from "./generate-form.module.scss";
 
 export const GenerateForm = () => {
   const { letters, isLoading, isCreated, generate, tryAgain } = useLetter();
@@ -65,18 +65,18 @@ export const GenerateForm = () => {
   };
 
   return (
-    <div className={s.wrapper}>
-      <h1 className={clsx(s.titlePlaceholder, [formData.company && s.title, formData.job && s.title])}>
+    <div className={styles.wrapper}>
+      <h1 className={clsx(styles.titlePlaceholder, [formData.company && styles.title, formData.job && styles.title])}>
         {!formData.job && !formData.company ? "New application" : `${formData.job}, ${formData.company}`}
       </h1>
-      <Separator className={s.separator} />
+      <Separator className={styles.separator} />
       <form
         ref={formReference}
         autoComplete='off'
-        className={s.form}
+        className={styles.form}
         onSubmit={handleSubmit}
       >
-        <div className={s.job}>
+        <div className={styles.job}>
           <Input
             label='Job title'
             name='job'
@@ -112,7 +112,7 @@ export const GenerateForm = () => {
           onChange={handleChange}
           onEnter={onKeyPressHandler}
         >
-          <span className={clsx(s.length, [error && s.lengthError])}>
+          <span className={clsx(styles.length, [error && styles.lengthError])}>
             {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}
           </span>
         </Textarea>
@@ -131,7 +131,7 @@ export const GenerateForm = () => {
           <Button
             variant='primary'
             disabled={isLoading}
-            className={s.loadingButton}
+            className={styles.loadingButton}
           >
             <Loading />
           </Button>
@@ -141,7 +141,7 @@ export const GenerateForm = () => {
             type='submit'
             variant='outline'
             disabled={disabled}
-            className={s.button}
+            className={styles.button}
             onKeyDown={onKeyPressHandler}
           >
             <Repeat /> {"Try Again"}

@@ -1,1 +1,1 @@
-export { LetterPreview } from "./letterPreview";
+export { LetterPreview } from "./letter-preview";

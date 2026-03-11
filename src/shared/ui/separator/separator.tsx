@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
-import s from "./separator.module.scss";
+import styles from "./separator.module.scss";
 
 type Properties = ComponentPropsWithoutRef<"div"> & {
   orientation?: "horizontal" | "vertical";
@@ -13,7 +13,7 @@ export const Separator = ({ orientation = "horizontal", decorative, className, .
       role={decorative ? "presentation" : "separator"}
       aria-orientation={decorative ? undefined : orientation}
       data-orientation={orientation}
-      className={clsx(s.root, className)}
+      className={clsx(styles.root, className)}
       {...properties}
     />
   );

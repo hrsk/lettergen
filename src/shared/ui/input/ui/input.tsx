@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { memo, type ComponentPropsWithRef } from "react";
-import s from "./input.module.scss";
+import styles from "./input.module.scss";
 
 type Properties = {
   type?: "text" | "password" | "search" | "email";
@@ -12,11 +12,11 @@ type Properties = {
 
 export const Input = memo(({ type = "text", label, error = false, disabled, className, ...rest }: Properties) => {
   return (
-    <div className={s.wrapper}>
-      {label && <label className={s.label}>{label}</label>}
+    <div className={styles.wrapper}>
+      {label && <label className={styles.label}>{label}</label>}
       <input
         type={type}
-        className={clsx(s.input, [error && s.isError])}
+        className={clsx(styles.input, [error && styles.isError])}
         disabled={disabled}
         {...rest}
       />

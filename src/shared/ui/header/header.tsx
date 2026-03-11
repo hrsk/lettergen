@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import s from "./header.module.scss";
+import styles from "./header.module.scss";
 
 export const Header = ({ children }: { children: ReactNode }) => {
-  return <div className={s.headerBlockWrapper}>{children}</div>;
+  return <div className={styles.headerBlockWrapper}>{children}</div>;
 };

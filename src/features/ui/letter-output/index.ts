@@ -1,1 +1,1 @@
-export { LetterOutput } from "./ui/letterOutput";
+export { LetterOutput } from "./ui/letter-output";

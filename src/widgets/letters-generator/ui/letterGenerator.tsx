@@ -1,9 +1,9 @@
 import { GenerateForm, LetterOutput } from "@/features/ui";
-import s from "./letterGenerator.module.scss";
+import styles from "./letterGenerator.module.scss";
 
 export const LettersGenerator = () => {
   return (
-    <div className={s.wrapper}>
+    <div className={styles.wrapper}>
       <GenerateForm />
       <LetterOutput />
     </div>

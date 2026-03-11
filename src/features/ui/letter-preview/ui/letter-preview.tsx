@@ -4,7 +4,7 @@ import { Button, Card, CardContent, CardFooter } from "@/shared/ui";
 import { useEffect, useState } from "react";
 import Copy from "@/assets/icons/svg/Copy.svg?react";
 import Delete from "@/assets/icons/svg/Trash.svg?react";
-import s from "./letterPreview.module.scss";
+import styles from "./letter-preview.module.scss";
 
 type Properties = { letter: Letter };
 export const LetterPreview = ({ letter }: Properties) => {
@@ -32,7 +32,7 @@ export const LetterPreview = ({ letter }: Properties) => {
         <p>{letter.text.other}</p>
         <p>{letter.text.thx}</p>
       </CardContent>
-      <CardFooter className={s.cardFooter}>
+      <CardFooter className={styles.cardFooter}>
         <Button
           variant='text'
           onClick={() => deleteLetter(letter.id)}

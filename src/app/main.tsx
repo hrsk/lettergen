@@ -2,8 +2,9 @@ import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { Goals } from "@/features/ui/goals";
 import { Header } from "@/widgets/header/ui/header";
 import { Outlet, useLocation } from "react-router-dom";
-import s from "./main.module.scss";
 import { useEffect } from "react";
+import styles from "./main.module.scss";
+import { MAX_GOALS } from "@/shared/constants";
 
 export const Main = () => {
   const { letters, resetLetter } = useLetter();
@@ -17,10 +18,10 @@ export const Main = () => {
   }, [pathname, resetLetter]);
 
   return (
-    <main className={s.main}>
+    <main className={styles.main}>
       <Header />
       <Outlet />
-      {letters.length < 5 && (
+      {letters.length < MAX_GOALS && (
         <Goals
           title={"Hit your goal"}
           description={"Generate and send out couple more job applications today to get hired faster"}

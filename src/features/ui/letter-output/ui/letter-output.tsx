@@ -5,15 +5,11 @@ import { Button, Card, CardContent, CardFooter, Scroll } from "@/shared/ui";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
-import s from "./letterOutput.module.scss";
+import styles from "./letter-output.module.scss";
 
 export const LetterOutput = () => {
   const { letters, isLoading } = useLetter();
   const [copy, setCopy] = useState<boolean>(false);
-
-  useEffect(() => {
-    localStorage.setItem("letters", JSON.stringify(letters));
-  }, [letters]);
 
   useEffect(() => {
     const timerID = setTimeout(() => setCopy(false), 1500);
@@ -28,7 +24,7 @@ export const LetterOutput = () => {
 
   if (isLoading) {
     return (
-      <article className={s.loading}>
+      <article className={styles.loading}>
         <Ellipse />
       </article>
     );
@@ -36,7 +32,7 @@ export const LetterOutput = () => {
 
   if (letters.length === 0) {
     return (
-      <article className={clsx([s.letterWrapper])}>
+      <article className={clsx([styles.letterWrapper])}>
         <p>Your personalized job application will appear here...</p>
       </article>
     );
@@ -45,7 +41,7 @@ export const LetterOutput = () => {
   return (
     <Card>
       <Scroll>
-        <CardContent className={s.content}>
+        <CardContent className={styles.content}>
           <p>{letters.at(-1)?.text.title}</p>
           <p>{letters.at(-1)?.text.company}</p>
           <p>{letters.at(-1)?.text.skills}</p>
@@ -54,7 +50,7 @@ export const LetterOutput = () => {
           <p>{letters.at(-1)?.text.thx}</p>
         </CardContent>
       </Scroll>
-      <CardFooter className={s.buttonsWrapper}>
+      <CardFooter className={styles.buttonsWrapper}>
         <Button
           variant='text'
           onClick={() => copyToClipboard(letters.at(-1)?.text)}

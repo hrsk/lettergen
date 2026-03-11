@@ -2,23 +2,23 @@ import Completed from "@/assets/icons/svg/Check.svg?react";
 import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
-import s from "./applicationsCounter.module.scss";
+import styles from "./applicationsCounter.module.scss";
 
 export const ApplicationsCounters = () => {
   const { letters } = useLetter();
 
   return (
-    <div className={s.container}>
-      <span className={s.text}>
+    <div className={styles.container}>
+      <span className={styles.text}>
         {Math.min(letters.length, MAX_GOALS)}/{MAX_GOALS} applications generated
       </span>
       {letters.length >= MAX_GOALS ? (
         <Completed />
       ) : (
-        <ul className={s.rounds}>
+        <ul className={styles.rounds}>
           {Array.from({ length: MAX_GOALS }).map((_, index) => (
             <li
-              className={clsx([index < letters.length ? s.activeRound : s.round])}
+              className={clsx([index < letters.length ? styles.activeRound : styles.round])}
               key={index}
             ></li>
           ))}
