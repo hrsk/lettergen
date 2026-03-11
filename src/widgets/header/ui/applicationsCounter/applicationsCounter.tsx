@@ -10,9 +10,9 @@ export const ApplicationsCounters = () => {
   return (
     <div className={s.container}>
       <span className={s.text}>
-        {letters.length}/{MAX_GOALS} applications generated
+        {Math.min(letters.length, MAX_GOALS)}/{MAX_GOALS} applications generated
       </span>
-      {letters.length === MAX_GOALS ? (
+      {letters.length >= MAX_GOALS ? (
         <Completed />
       ) : (
         <ul className={s.rounds}>

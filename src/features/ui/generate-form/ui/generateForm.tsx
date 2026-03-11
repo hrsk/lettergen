@@ -1,11 +1,11 @@
 import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
-import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
-import { MAX_GOALS, TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
+import { TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
+import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { delayPromise } from "@/shared/utils";
 import clsx from "clsx";
-import { useCallback, useState, type ChangeEvent, type SyntheticEvent, type KeyboardEvent, useRef } from "react";
+import { useCallback, useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from "react";
 import s from "./generateForm.module.scss";
 
 export const GenerateForm = () => {
@@ -117,7 +117,7 @@ export const GenerateForm = () => {
           </span>
         </Textarea>
 
-        {!isLoading && isCreated === false && letters.length < MAX_GOALS && (
+        {!isLoading && !isCreated && (
           <Button
             type='submit'
             disabled={disabled}
@@ -136,7 +136,7 @@ export const GenerateForm = () => {
             <Loading />
           </Button>
         )}
-        {!isLoading && isCreated === true && letters.length > 0 && (
+        {!isLoading && isCreated && letters.length > 0 && (
           <Button
             type='submit'
             variant='outline'
