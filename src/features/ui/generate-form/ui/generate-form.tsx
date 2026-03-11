@@ -1,6 +1,6 @@
 import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
-import { applicationFormSchema } from "@/features/ui/generate-form/model";
+import { applicationFormSchema, INITIAL_VALUES } from "@/features/ui/generate-form/model";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
 import { FIELDS_LIMIT } from "@/shared/constants";
 import { Button, Input, Separator, Textarea } from "@/shared/ui";
@@ -22,7 +22,7 @@ export const GenerateForm = () => {
   } = useForm<GenerateParameters>({
     resolver: zodResolver(applicationFormSchema),
     mode: "onChange",
-    defaultValues: { job: "", company: "", skills: "", additional: "" },
+    defaultValues: INITIAL_VALUES,
   });
 
   const job = useWatch({ control, name: "job" });
@@ -67,7 +67,8 @@ export const GenerateForm = () => {
   const formReference = useRef<HTMLFormElement>(null);
 
   const onKeyPressHandler = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
+    const { key } = event;
+    if ((key === "Enter" && event.altKey) || event.metaKey) {
       formReference.current?.requestSubmit();
     }
   };
@@ -140,7 +141,6 @@ export const GenerateForm = () => {
 
         {!isLoading && !isCreated && (
           <Button
-            type='submit'
             disabled={disabled}
             variant='primary'
           >
@@ -158,7 +158,6 @@ export const GenerateForm = () => {
         )}
         {!isLoading && isCreated && letters.length > 0 && (
           <Button
-            type='submit'
             variant='outline'
             disabled={disabled}
             className={styles.button}
