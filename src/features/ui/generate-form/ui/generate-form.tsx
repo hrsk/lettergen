@@ -1,62 +1,70 @@
 import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
+import { applicationFormSchema } from "@/features/ui/generate-form/model";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
-import { TEXT_AREA_MAX_SYMBOLS } from "@/shared/constants";
+import { FIELDS_LIMIT } from "@/shared/constants";
 import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { delayPromise } from "@/shared/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import { useCallback, useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from "react";
+import { useMemo, useRef, type KeyboardEvent } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import styles from "./generate-form.module.scss";
 
 export const GenerateForm = () => {
   const { letters, isLoading, isCreated, generate, tryAgain } = useLetter();
-  const [error, setError] = useState<boolean>(false);
 
-  const [formData, setFormLocalData] = useState({
-    job: "",
-    company: "",
-    skills: "",
-    additional: "",
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid },
+  } = useForm<GenerateParameters>({
+    resolver: zodResolver(applicationFormSchema),
+    mode: "onChange",
+    defaultValues: { job: "", company: "", skills: "", additional: "" },
   });
-  const disabled = !formData.job || !formData.company || !formData.skills || !formData.additional || error;
 
-  const formReference = useRef<HTMLFormElement>(null);
+  const job = useWatch({ control, name: "job" });
+  const company = useWatch({ control, name: "company" });
 
-  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
-    event.preventDefault();
+  const title = useMemo(() => {
+    const trimmedJob = job?.trim();
+    const trimmedCompany = company?.trim();
+
+    if (trimmedJob && trimmedCompany) {
+      return `${trimmedJob}, ${trimmedCompany}`;
+    }
+
+    return trimmedJob || trimmedCompany || "New application";
+  }, [job, company]);
+
+  const hasContent = job?.trim() || company?.trim();
+
+  const handleFormSubmit = async (data: GenerateParameters) => {
+    const trimmedData: GenerateParameters = {
+      job: data.job.trim(),
+      company: data.company.trim(),
+      skills: data.skills.trim(),
+      additional: data.additional.trim(),
+    };
+
     if (isCreated) {
       tryAgain({
-        job: formData.job,
-        company: formData.company,
-        skills: formData.skills,
-        additional: formData.additional,
+        ...trimmedData,
       });
     } else {
       generate({
-        job: formData.job,
-        company: formData.company,
-        skills: formData.skills,
-        additional: formData.additional,
+        ...trimmedData,
       });
     }
     await delayPromise(2000);
-    setFormLocalData({ job: "", company: "", skills: "", additional: "" });
+    reset();
   };
 
-  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.currentTarget;
+  const disabled = !isValid;
 
-    if (event.currentTarget instanceof HTMLTextAreaElement) {
-      setError(value.length > 1200);
-    } else {
-      setError(false);
-    }
-
-    setFormLocalData((previous: GenerateParameters) => ({
-      ...previous,
-      [name]: value,
-    }));
-  }, []);
+  const formReference = useRef<HTMLFormElement>(null);
 
   const onKeyPressHandler = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
@@ -66,63 +74,75 @@ export const GenerateForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={clsx(styles.titlePlaceholder, [formData.company && styles.title, formData.job && styles.title])}>
-        {!formData.job && !formData.company ? "New application" : `${formData.job}, ${formData.company}`}
-      </h1>
+      <h1 className={clsx(styles.titlePlaceholder, [hasContent && styles.title])}>{title}</h1>
       <Separator className={styles.separator} />
       <form
         ref={formReference}
-        autoComplete='off'
         className={styles.form}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className={styles.job}>
-          <Input
-            label='Job title'
+          <Controller
             name='job'
-            placeholder='Product manager'
-            disabled={isLoading}
-            value={formData.job}
-            onChange={handleChange}
+            control={control}
+            render={({ field, fieldState }) => (
+              <Input
+                label='Job title'
+                placeholder='Product manager'
+                error={fieldState.error?.message}
+                disabled={isLoading}
+                {...field}
+              />
+            )}
           />
-          <Input
-            label='Company'
+          <Controller
             name='company'
-            placeholder='Apple'
-            disabled={isLoading}
-            value={formData.company}
-            onChange={handleChange}
+            control={control}
+            render={({ field, fieldState }) => (
+              <Input
+                label='Company'
+                placeholder='Apple'
+                error={fieldState.error?.message}
+                disabled={isLoading}
+                {...field}
+              />
+            )}
           />
         </div>
-        <Input
-          label='I am good at...'
+        <Controller
           name='skills'
-          placeholder='HTML, CSS and doing things in time'
-          disabled={isLoading}
-          value={formData.skills}
-          onChange={handleChange}
+          control={control}
+          render={({ field, fieldState }) => (
+            <Input
+              label='I am good at...'
+              placeholder='HTML, CSS and doing things in time'
+              error={fieldState.error?.message}
+              disabled={isLoading}
+              {...field}
+            />
+          )}
         />
-        <Textarea
-          label={"Additional details"}
+        <Controller
           name='additional'
-          isError={error}
-          disabled={isLoading}
-          placeholder={"Describe why you are a great fit or paste your bio"}
-          value={formData.additional}
-          onChange={handleChange}
-          onEnter={onKeyPressHandler}
-        >
-          <span className={clsx(styles.length, [error && styles.lengthError])}>
-            {formData.additional.length}/{TEXT_AREA_MAX_SYMBOLS}
-          </span>
-        </Textarea>
+          control={control}
+          render={({ field, fieldState }) => (
+            <Textarea
+              label={"Additional details"}
+              placeholder={"Describe why you are a great fit or paste your bio"}
+              error={fieldState.error?.message}
+              onEnter={onKeyPressHandler}
+              disabled={isLoading}
+              maxLength={FIELDS_LIMIT.additional.max}
+              {...field}
+            />
+          )}
+        />
 
         {!isLoading && !isCreated && (
           <Button
             type='submit'
             disabled={disabled}
             variant='primary'
-            onKeyDown={onKeyPressHandler}
           >
             Generate Now
           </Button>
@@ -142,7 +162,6 @@ export const GenerateForm = () => {
             variant='outline'
             disabled={disabled}
             className={styles.button}
-            onKeyDown={onKeyPressHandler}
           >
             <Repeat /> {"Try Again"}
           </Button>

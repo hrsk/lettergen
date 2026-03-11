@@ -53,3 +53,14 @@
     }
   }
 }
+
+.length {
+  color: var(--gray-700);
+  font-weight: 400;
+  font-size: var(--font-size-s);
+  line-height: 143%;
+}
+
+.lengthError {
+  color: var(--warning-300);
+}

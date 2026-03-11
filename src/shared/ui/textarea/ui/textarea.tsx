@@ -1,33 +1,43 @@
 import clsx from "clsx";
-import { memo, type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
-import styles from "./textarea.module.scss";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { forwardRef, type KeyboardEvent, type TextareaHTMLAttributes } from "react";
+import styles from "./textarea.module.scss";
 
-type Properties = {
+export interface TextareaProperties extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
-  isError?: boolean;
+  error?: string;
   disabled?: boolean;
-  children: ReactNode;
+  showCounter?: boolean;
   onEnter?: (event: KeyboardEvent) => void;
-} & ComponentPropsWithRef<"textarea">;
+}
 
-export const Textarea = memo(({ label, isError, disabled, className, children, onEnter, ...rest }: Properties) => {
-  return (
-    <div className={styles.wrapper}>
-      {label && <label className={styles.label}>{label}</label>}
-      <OverlayScrollbarsComponent
-        className={clsx(styles.overlayscrollbars, [isError && styles.isError])}
-        options={{ scrollbars: { theme: "os-theme-custom" } }}
-      >
-        <textarea
-          data-overlayscrollbars-field
-          onKeyDown={onEnter}
-          disabled={disabled}
-          className={clsx(styles.textarea, [isError && styles.isError])}
-          {...rest}
-        />
-      </OverlayScrollbarsComponent>
-      {children}
-    </div>
-  );
-});
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProperties>(
+  ({ label, error, disabled, className, value, maxLength, showCounter = true, onEnter, ...rest }, reference) => {
+    const currentLength = value ? String(value).length : 0;
+    return (
+      <div className={styles.wrapper}>
+        {label && <label className={styles.label}>{label}</label>}
+        <OverlayScrollbarsComponent
+          className={clsx(styles.overlayscrollbars, [error && styles.isError])}
+          options={{ scrollbars: { theme: "os-theme-custom" } }}
+        >
+          <textarea
+            ref={reference}
+            data-overlayscrollbars-field
+            value={value}
+            onKeyDown={onEnter}
+            disabled={disabled}
+            className={clsx(styles.textarea, [error && styles.isError])}
+            {...rest}
+          />
+        </OverlayScrollbarsComponent>
+        {showCounter && (
+          <span className={clsx(styles.length, [error && styles.lengthError])}>
+            {currentLength}
+            {maxLength && ` / ${maxLength}`}
+          </span>
+        )}
+      </div>
+    );
+  },
+);
