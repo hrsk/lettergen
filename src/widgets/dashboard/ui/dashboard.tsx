@@ -1,10 +1,9 @@
-import Plus from "@/assets/icons/svg/Plus.svg?react";
 import { LetterPreview } from "@/features/ui";
 import { useLetter } from "@/features/ui/generate-form";
-import { Button, Header } from "@/shared/ui";
 import { Link } from "react-router-dom";
-import styles from "./dashboard.module.scss";
 import { ROUTES_PATHS } from "@/shared/config";
+import { Button, Header, Plus } from "@hrsk/lettergen-ui-kit";
+import styles from "./dashboard.module.scss";
 
 export const Dashboard = () => {
   const { letters } = useLetter();

@@ -1,10 +1,7 @@
 import { useLetter, type Letter, type LetterText } from "@/features/ui/generate-form";
-import { Button, Card, CardContent, CardFooter } from "@/shared/ui";
-
 import { useEffect, useState } from "react";
-import Copy from "@/assets/icons/svg/Copy.svg?react";
-import Delete from "@/assets/icons/svg/Trash.svg?react";
 import styles from "./letter-preview.module.scss";
+import { Button, Card, CardContent, CardFooter, Copy, Trash } from "@hrsk/lettergen-ui-kit";
 
 type Properties = { letter: Letter };
 export const LetterPreview = ({ letter }: Properties) => {
@@ -36,7 +33,7 @@ export const LetterPreview = ({ letter }: Properties) => {
           variant='text'
           onClick={() => deleteLetter(letter.id)}
         >
-          <Delete />
+          <Trash />
           Delete
         </Button>
         <Button

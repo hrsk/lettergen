@@ -1,7 +1,5 @@
-import Copy from "@/assets/icons/svg/Copy.svg?react";
-import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
+import { Button, Card, CardContent, CardFooter, Copy, Ellipse } from "@hrsk/lettergen-ui-kit";
 import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
-import { Button, Card, CardContent, CardFooter } from "@/shared/ui";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
@@ -27,7 +25,10 @@ export const LetterOutput = () => {
   if (isLoading) {
     return (
       <article className={styles.loading}>
-        <Ellipse />
+        <Ellipse
+          width={80}
+          height={80}
+        />
       </article>
     );
   }

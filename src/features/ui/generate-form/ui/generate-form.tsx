@@ -1,8 +1,7 @@
-import Repeat from "@/assets/icons/svg/Repeat.svg?react";
+import { Button, Input, Repeat, Separator, Textarea } from "@hrsk/lettergen-ui-kit/";
 import { applicationFormSchema, INITIAL_VALUES } from "@/features/ui/generate-form/model";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
 import { FIELDS_LIMIT } from "@/shared/constants";
-import { Button, Input, Separator, Textarea } from "@/shared/ui";
 import { delayPromise } from "@/shared/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -91,6 +90,7 @@ export const GenerateForm = () => {
                 placeholder='Product manager'
                 error={fieldState.error?.message}
                 disabled={isLoading}
+                fullWidth
                 {...field}
               />
             )}
@@ -104,6 +104,7 @@ export const GenerateForm = () => {
                 placeholder='Apple'
                 error={fieldState.error?.message}
                 disabled={isLoading}
+                fullWidth
                 {...field}
               />
             )}
@@ -118,6 +119,7 @@ export const GenerateForm = () => {
               placeholder='HTML, CSS and doing things in time'
               error={fieldState.error?.message}
               disabled={isLoading}
+              fullWidth
               {...field}
             />
           )}
@@ -130,7 +132,7 @@ export const GenerateForm = () => {
               label={"Additional details"}
               placeholder={"Describe why you are a great fit or paste your bio"}
               error={fieldState.error?.message}
-              onEnter={onKeyPressHandler}
+              onKeyDown={onKeyPressHandler}
               disabled={isLoading}
               maxLength={FIELDS_LIMIT.additional.max}
               {...field}
@@ -144,8 +146,8 @@ export const GenerateForm = () => {
             variant='outline'
             disabled={disabled || isLoading}
             className={clsx(styles.button, [isLoading && styles.loading])}
-            isLoading={isLoading}
             leftIcon={<Repeat />}
+            isLoading={isLoading}
           >
             Try Again
           </Button>

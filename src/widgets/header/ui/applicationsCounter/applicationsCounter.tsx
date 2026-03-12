@@ -1,8 +1,8 @@
-import Completed from "@/assets/icons/svg/Check.svg?react";
 import { useLetter } from "@/features/ui/generate-form/model/letterStore";
 import { MAX_GOALS } from "@/shared/constants/constants";
 import clsx from "clsx";
 import styles from "./applicationsCounter.module.scss";
+import { Check } from "@hrsk/lettergen-ui-kit";
 
 export const ApplicationsCounters = () => {
   const { letters } = useLetter();
@@ -13,7 +13,7 @@ export const ApplicationsCounters = () => {
         {Math.min(letters.length, MAX_GOALS)}/{MAX_GOALS} applications generated
       </span>
       {letters.length >= MAX_GOALS ? (
-        <Completed />
+        <Check />
       ) : (
         <ul className={styles.rounds}>
           {Array.from({ length: MAX_GOALS }).map((_, index) => (

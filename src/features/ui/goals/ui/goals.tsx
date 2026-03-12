@@ -1,7 +1,6 @@
-import Plus from "@/assets/icons/svg/Plus.svg?react";
 import { useLetter } from "@/features/ui/generate-form/model/letterStore";
+import { Button, Plus } from "@hrsk/lettergen-ui-kit";
 import { MAX_GOALS } from "@/shared/constants/constants";
-import { Button } from "@/shared/ui";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { ROUTES_PATHS } from "@/shared/config";
