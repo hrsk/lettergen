@@ -10,6 +10,8 @@ type Properties = { letter: Letter };
 export const LetterPreview = ({ letter }: Properties) => {
   const { deleteLetter } = useLetter();
 
+  const letterText = Object.entries(letter.text || ({} as LetterText));
+
   const [copy, setCopy] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,12 +27,9 @@ export const LetterPreview = ({ letter }: Properties) => {
   return (
     <Card size='sm'>
       <CardContent>
-        <p>{letter.text.title}</p>
-        <p>{letter.text.company}</p>
-        <p>{letter.text.skills}</p>
-        <p>{letter.text.additional}</p>
-        <p>{letter.text.other}</p>
-        <p>{letter.text.thx}</p>
+        {letterText.map(([key, value]) => (
+          <p key={key}>{value}</p>
+        ))}
       </CardContent>
       <CardFooter className={styles.cardFooter}>
         <Button

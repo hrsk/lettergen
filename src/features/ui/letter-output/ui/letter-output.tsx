@@ -11,6 +11,8 @@ export const LetterOutput = () => {
   const { letters, isLoading } = useLetter();
   const [copy, setCopy] = useState<boolean>(false);
 
+  const letterText = Object.entries(letters.at(-1)?.text || ({} as LetterText));
+
   useEffect(() => {
     const timerID = setTimeout(() => setCopy(false), 1500);
     return () => clearTimeout(timerID);
@@ -42,12 +44,9 @@ export const LetterOutput = () => {
     <Card>
       <CardContent className={styles.content}>
         <div className={styles.scrollbar}>
-          <p>{letters.at(-1)?.text.title}</p>
-          <p>{letters.at(-1)?.text.company}</p>
-          <p>{letters.at(-1)?.text.skills}</p>
-          <p>{letters.at(-1)?.text.additional}</p>
-          <p>{letters.at(-1)?.text.other}</p>
-          <p>{letters.at(-1)?.text.thx}</p>
+          {letterText.map(([key, value]) => (
+            <p key={key}>{value}</p>
+          ))}
         </div>
       </CardContent>
       <CardFooter className={styles.buttonsWrapper}>

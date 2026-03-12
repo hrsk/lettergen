@@ -42,10 +42,12 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 28px;
   padding-right: 4px;
 
   .scrollbar {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
     height: 512px;
     width: 100%;
     overflow-y: hidden;
