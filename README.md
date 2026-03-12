@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# lettergen
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Small SPA for generating and managing job application letters.
 
-Currently, two official plugins are available:
+The app is currently template-based (no backend): you fill in a short form and it produces a structured letter, saves it to `localStorage`, and lets you copy/delete generated applications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Generate a letter from `job`, `company`, `skills`, `additional details`
+- Dashboard with saved applications (persisted via `localStorage`)
+- Copy to clipboard (from generator view and dashboard cards)
+- Delete saved applications
+- Goal counter (`MAX_GOALS = 5`)
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 19 + TypeScript
+- Vite 7
+- Routing: `react-router-dom` (`HashRouter` for GitHub Pages)
+- State: Zustand (`persist` -> `localStorage`)
+- Forms: `react-hook-form` + Zod
+- Styling: SCSS modules
+- Tooling: ESLint, Prettier, Stylelint, Husky + lint-staged
+- UI: `@hrsk/lettergen-ui-kit`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Requirements
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 20+ (CI uses Node 20)
+- pnpm 10+
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Quickstart
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open `http://localhost:3000/lettergen/`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `pnpm dev`: start Vite dev server (port `3000`)
+- `pnpm build`: typecheck + production build into `build/`
+- `pnpm preview`: preview the production build locally
+- `pnpm lint`: run ESLint
+- `pnpm lint:styles`: run Stylelint
+- `pnpm lint:styles:fix`: auto-fix Stylelint issues
+- `pnpm storybook`: run Storybook on `6006`
+- `pnpm build-storybook`: build Storybook
+
+## Environment Variables
+
+Vite loads `.env*` files and exposes variables prefixed with `VITE_` to the client.
+
+- `VITE_GEMINI_API_KEY`: reserved for a future Gemini integration (currently not referenced in `src/`)
+
+Use `.env.example` as a template and keep your real `.env` uncommitted (it is ignored by `.gitignore`).
+
+## Project Structure
+
+- `src/app`: app shell and routing (`AppRoutes`, `Main`)
+- `src/widgets`: page-level widgets (`Dashboard`, `LettersGenerator`, `Header`)
+- `src/features`: feature modules (generate form, output, previews, goals)
+- `src/shared`: shared constants/config/utils
+- `src/styles`, `src/index.scss`: global styles and variables
+
+## Persistence
+
+Generated applications are stored in the browser under the `localStorage` key `letters`.
+To fully reset the app state, clear that key (or clear site data in your browser).
+
+## Deployment (GitHub Pages)
+
+CI builds on pushes to `main` and deploys the `build/` directory to GitHub Pages via `.github/workflows/deploy.yml`.
+
+This repo is configured with:
+
+- Vite `base: "/lettergen/"` in `vite.config.ts`
+- `HashRouter` in `src/app/appRoutes.tsx` to avoid server-side route handling on Pages
