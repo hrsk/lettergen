@@ -67,7 +67,7 @@ export const GenerateForm = () => {
 
   const onKeyPressHandler = (event: KeyboardEvent) => {
     const { key } = event;
-    if ((key === "Enter" && event.altKey) || event.metaKey) {
+    if ((key === "Enter" && event.altKey) || (event.metaKey && key === "Enter")) {
       formReference.current?.requestSubmit();
     }
   };

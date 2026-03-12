@@ -1,9 +1,9 @@
 import Copy from "@/assets/icons/svg/Copy.svg?react";
-import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
 import Ellipse from "@/assets/icons/svg/Ellipse.svg?react";
-import { Button, Card, CardContent, CardFooter, Scroll } from "@/shared/ui";
-import { useEffect, useState } from "react";
+import { useLetter, type LetterText } from "@/features/ui/generate-form/model/letterStore";
+import { Button, Card, CardContent, CardFooter } from "@/shared/ui";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 import styles from "./letter-output.module.scss";
 
@@ -40,16 +40,16 @@ export const LetterOutput = () => {
 
   return (
     <Card>
-      <Scroll>
-        <CardContent className={styles.content}>
+      <CardContent className={styles.content}>
+        <div className={styles.scrollbar}>
           <p>{letters.at(-1)?.text.title}</p>
           <p>{letters.at(-1)?.text.company}</p>
           <p>{letters.at(-1)?.text.skills}</p>
           <p>{letters.at(-1)?.text.additional}</p>
           <p>{letters.at(-1)?.text.other}</p>
           <p>{letters.at(-1)?.text.thx}</p>
-        </CardContent>
-      </Scroll>
+        </div>
+      </CardContent>
       <CardFooter className={styles.buttonsWrapper}>
         <Button
           variant='text'

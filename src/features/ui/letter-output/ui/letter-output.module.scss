@@ -43,5 +43,30 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
-  line-break: auto;
+  padding-right: 4px;
+
+  .scrollbar {
+    height: 512px;
+    width: 100%;
+    overflow-y: hidden;
+    padding-right: 4px;
+
+    &:hover {
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background: none;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: var(--gray-100);
+      }
+    }
+  }
 }
