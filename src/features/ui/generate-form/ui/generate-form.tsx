@@ -1,4 +1,3 @@
-import Loading from "@/assets/icons/svg/Loading.svg?react";
 import Repeat from "@/assets/icons/svg/Repeat.svg?react";
 import { applicationFormSchema, INITIAL_VALUES } from "@/features/ui/generate-form/model";
 import { useLetter, type GenerateParameters } from "@/features/ui/generate-form/model/letterStore";
@@ -12,7 +11,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 import styles from "./generate-form.module.scss";
 
 export const GenerateForm = () => {
-  const { letters, isLoading, isCreated, generate, tryAgain } = useLetter();
+  const { isLoading, isCreated, generate, tryAgain } = useLetter();
 
   const {
     control,
@@ -139,30 +138,25 @@ export const GenerateForm = () => {
           )}
         />
 
-        {!isLoading && !isCreated && (
+        {isCreated ? (
           <Button
-            disabled={disabled}
+            type='submit'
+            variant='outline'
+            disabled={disabled || isLoading}
+            className={clsx(styles.button, [isLoading && styles.loading])}
+            isLoading={isLoading}
+            leftIcon={<Repeat />}
+          >
+            Try Again
+          </Button>
+        ) : (
+          <Button
+            type='submit'
+            disabled={disabled || isLoading}
             variant='primary'
+            isLoading={isLoading}
           >
             Generate Now
-          </Button>
-        )}
-        {isLoading && (
-          <Button
-            variant='primary'
-            disabled={isLoading}
-            className={styles.loadingButton}
-          >
-            <Loading />
-          </Button>
-        )}
-        {!isLoading && isCreated && letters.length > 0 && (
-          <Button
-            variant='outline'
-            disabled={disabled}
-            className={styles.button}
-          >
-            <Repeat /> {"Try Again"}
           </Button>
         )}
       </form>

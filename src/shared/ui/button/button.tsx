@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { ComponentProps, ElementType, ReactNode } from "react";
+import Loading from "@/assets/icons/svg/Loading.svg?react";
 import styles from "./button.module.scss";
 
 type Variant = "primary" | "secondary" | "outline" | "text";
@@ -10,6 +11,9 @@ type ButtonComponentOwnProperties<E extends ElementType = ElementType> = {
   variant?: Variant;
   className?: string;
   disabled?: boolean;
+  isLoading?: boolean;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
 };
 
 type EditableComponentProperties<E extends ElementType> = ButtonComponentOwnProperties<E> &
@@ -22,6 +26,9 @@ export const Button = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
   children,
   disabled,
   variant,
+  leftIcon,
+  rightIcon,
+  isLoading,
   className,
   ...rest
 }: EditableComponentProperties<E>) => {
@@ -29,11 +36,19 @@ export const Button = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
 
   return (
     <Component
-      className={clsx(styles.button, styles[`button--${variant}`], className)}
+      className={clsx(styles.button, styles[`button--${variant}`], [isLoading && styles.loadingButton], className)}
       disabled={disabled}
       {...rest}
     >
-      {children}
+      {isLoading && <Loading />}
+
+      <span className={clsx(styles.content, [isLoading && styles.contentHidden])}>
+        {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
+
+        {children}
+
+        {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
+      </span>
     </Component>
   );
 };

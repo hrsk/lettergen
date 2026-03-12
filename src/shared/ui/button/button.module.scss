@@ -10,7 +10,25 @@
   line-height: 156%;
   cursor: pointer;
   gap: 12px;
-  border: 1px solid #d0d5dd;
+  border: none;
+
+  .content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .leftIcon,
+  .rightIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contentHidden {
+    display: none;
+  }
 
   &--primary {
     border: 1px solid var(--green-500);
@@ -46,6 +64,12 @@
       box-shadow: 0 1px 2px 0 rgb(16 24 40 / 5%);
       background: var(--gray-100);
       color: var(--gray-300);
+
+      svg {
+        path {
+          stroke: var(--gray-300);
+        }
+      }
     }
 
     &svg {
@@ -84,6 +108,30 @@
 
     &[disabled] {
       cursor: not-allowed;
+    }
+  }
+
+  &[disabled].loadingButton {
+    border: 1px solid var(--green-500);
+    background-color: var(--green-500);
+    box-shadow: 0 1px 2px 0 rgb(16 24 40 / 5%);
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    svg {
+      animation: rotate 2s linear infinite;
+
+      path {
+        stroke: var(--light-100);
+      }
     }
   }
 }
