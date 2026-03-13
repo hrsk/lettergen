@@ -25,8 +25,9 @@ export const Goals = ({ title, description }: Properties) => {
           onClick={() => resetLetter(false)}
           className={clsx(styles.goalsButton)}
           variant='primary'
+          leftIcon={<Plus />}
         >
-          <Plus /> {"Create New"}
+          Create New
         </Button>
       ) : (
         <Button
@@ -34,8 +35,9 @@ export const Goals = ({ title, description }: Properties) => {
           to={ROUTES_PATHS.GENERATION}
           className={clsx(styles.goalsButton)}
           variant='primary'
+          leftIcon={<Plus />}
         >
-          <Plus /> {"Create New"}
+          Create New
         </Button>
       )}
       <div className={styles.goalsCounter}>

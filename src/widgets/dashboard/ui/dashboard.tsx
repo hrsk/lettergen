@@ -17,9 +17,9 @@ export const Dashboard = () => {
           to={ROUTES_PATHS.GENERATION}
           variant={"primary"}
           className={styles.appHeaderButton}
+          leftIcon={<Plus />}
         >
-          <Plus />
-          {"Create New"}
+          Create New
         </Button>
       </Header>
       <div className={styles.letters}>
